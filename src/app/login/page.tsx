@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -17,7 +16,6 @@ import {
 } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
-
 
 export default function LoginPage() {
   const router = useRouter();
@@ -76,7 +74,10 @@ export default function LoginPage() {
   return (
     <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background px-5 py-12 sm:px-8">
       {/* Background decoration */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 overflow-hidden"
+      >
         <div className="absolute -left-40 -top-40 h-96 w-96 rounded-full bg-lime/15 blur-3xl" />
         <div className="absolute -bottom-40 -right-40 h-96 w-96 rounded-full bg-forest/10 blur-3xl dark:bg-lime/10" />
         <div className="gt-dots absolute right-10 top-10 hidden h-40 w-40 opacity-40 sm:block" />
@@ -116,8 +117,7 @@ export default function LoginPage() {
               </span>
 
               <h1 className="mt-7 text-4xl font-black uppercase leading-[1.05] text-white xl:text-5xl">
-                Good things happen{" "}
-                <span className="text-lime">together.</span>
+                Good things happen <span className="text-lime">together.</span>
               </h1>
 
               <p className="mt-6 max-w-sm text-sm leading-8 text-on-forest/75">
@@ -139,7 +139,8 @@ export default function LoginPage() {
                   <HeartHandshake size={25} />
                 </span>
                 <span className="text-xl font-black text-foreground">
-                  Good<span className="text-forest dark:text-lime">Together</span>
+                  Good
+                  <span className="text-forest dark:text-lime">Together</span>
                 </span>
               </Link>
 
@@ -212,7 +213,9 @@ export default function LoginPage() {
 
                     <button
                       type="button"
-                      aria-label={showPassword ? "Hide password" : "Show password"}
+                      aria-label={
+                        showPassword ? "Hide password" : "Show password"
+                      }
                       onClick={() => setShowPassword(!showPassword)}
                       className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground transition hover:text-foreground"
                     >
@@ -257,11 +260,27 @@ export default function LoginPage() {
                 {googleLoading ? (
                   <Loader2 size={19} className="animate-spin" />
                 ) : (
-                  <svg viewBox="0 0 48 48" className="h-5 w-5" aria-hidden="true">
-                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5Z" />
-                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.76 7.18l7.73 6C44.42 38.05 46.98 31.9 46.98 24.55Z" />
-                    <path fill="#FBBC05" d="M10.53 28.59A14.4 14.4 0 0 1 9.75 24c0-1.59.27-3.13.76-4.59l-7.98-6.19A23.9 23.9 0 0 0 0 24c0 3.87.93 7.52 2.56 10.78l7.97-6.19Z" />
-                    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.91-5.8l-7.73-6c-2.14 1.45-4.88 2.3-8.18 2.3-6.26 0-11.57-4.22-13.46-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48Z" />
+                  <svg
+                    viewBox="0 0 48 48"
+                    className="h-5 w-5"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fill="#EA4335"
+                      d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5Z"
+                    />
+                    <path
+                      fill="#4285F4"
+                      d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.76 7.18l7.73 6C44.42 38.05 46.98 31.9 46.98 24.55Z"
+                    />
+                    <path
+                      fill="#FBBC05"
+                      d="M10.53 28.59A14.4 14.4 0 0 1 9.75 24c0-1.59.27-3.13.76-4.59l-7.98-6.19A23.9 23.9 0 0 0 0 24c0 3.87.93 7.52 2.56 10.78l7.97-6.19Z"
+                    />
+                    <path
+                      fill="#34A853"
+                      d="M24 48c6.48 0 11.93-2.13 15.91-5.8l-7.73-6c-2.14 1.45-4.88 2.3-8.18 2.3-6.26 0-11.57-4.22-13.46-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48Z"
+                    />
                   </svg>
                 )}
                 Continue with Google

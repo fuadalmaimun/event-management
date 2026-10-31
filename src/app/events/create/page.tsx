@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, type FormEvent } from "react";
@@ -50,7 +49,7 @@ export default function CreateEventPage() {
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    >,
   ) => {
     const { name, value } = e.target;
 
@@ -77,22 +76,30 @@ export default function CreateEventPage() {
     try {
       setLoading(true);
 
+      // 1. Get JWT Token
+      const { data, error } = await authClient.token();
+
+      if (error || !data?.token) {
+        throw new Error("Unable to get access token. Please login again.");
+      }
+
+      const token = data.token;
+
+      // Backend JWT থেকে organizerEmail নেবে
       const eventData = {
         ...formData,
-        organizerEmail: session.user.email,
         createdAt: new Date().toISOString(),
       };
 
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/add-event`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(eventData),
-        }
-      );
+      // 4. Send Request
+      const response = await fetch(`${ process.env.NEXT_PUBLIC_API_URL}/add-event`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(eventData),
+      });
 
       const result = await response.json();
 
@@ -110,7 +117,7 @@ export default function CreateEventPage() {
       toast.error(
         error instanceof Error
           ? error.message
-          : "Something went wrong. Please try again."
+          : "Something went wrong. Please try again.",
       );
     } finally {
       setLoading(false);
