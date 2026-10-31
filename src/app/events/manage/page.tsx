@@ -1,24 +1,23 @@
-
 "use client";
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 import {
-  CalendarDays,
-  MapPin,
-  Plus,
-  Loader2,
-  AlertCircle,
+  MoreVertical,
   Pencil,
   Trash2,
+  Eye,
+  MapPin,
+  CalendarDays,
+  Plus,
 } from "lucide-react";
-
 import EditEvent from "./EditEvent";
 import DeleteEvent from "./DeleteEvent";
 
 export interface Event {
   _id: string;
+  allEventId?: string;
   title: string;
   description: string;
   eventType: string;
@@ -29,310 +28,207 @@ export interface Event {
   createdAt: string;
 }
 
+const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+
 export default function ManageEventsPage() {
   const { data: session, isPending } = authClient.useSession();
-
   const [events, setEvents] = useState<Event[]>([]);
+  const [selected, setSelected] = useState<Event | null>(null);
+  const [menu, setMenu] = useState<string | null>(null);
+  const [modal, setModal] = useState<"edit" | "delete" | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const email = session?.user?.email;
 
-  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
-  const [editOpen, setEditOpen] = useState(false);
-  const [deleteOpen, setDeleteOpen] = useState(false);
-
-  const userEmail = session?.user?.email;
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
-  // Fetch my events
   useEffect(() => {
-    if (isPending) return;
-
-    if (!userEmail) {
-      setLoading(false);
+    if (!email) {
+      if (!isPending) setLoading(false);
       return;
     }
 
-    const fetchMyEvents = async () => {
-      try {
-        setLoading(true);
-        setError("");
+    fetch(`${API}/my-events/${encodeURIComponent(email)}`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to load events");
+        return res.json();
+      })
+      .then(setEvents)
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  }, [email, isPending]);
 
-        const response = await fetch(
-          `${API_URL}/events?organizerEmail=${encodeURIComponent(userEmail)}`,
-          { cache: "no-store" },
-        );
-
-        if (!response.ok) {
-          throw new Error("Failed to load your events.");
-        }
-
-        const data = await response.json();
-        setEvents(Array.isArray(data) ? data : data.events || []);
-      } catch (err) {
-        console.error(err);
-        setError(
-          err instanceof Error ? err.message : "Something went wrong.",
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchMyEvents();
-  }, [userEmail, isPending, API_URL]);
-
-  // Open Edit popup
-  const handleEdit = (event: Event) => {
-    setSelectedEvent(event);
-    setEditOpen(true);
+  const closeModal = () => {
+    setModal(null);
+    setSelected(null);
   };
 
-  // Open Delete popup
-  const handleDelete = (event: Event) => {
-    setSelectedEvent(event);
-    setDeleteOpen(true);
-  };
-
-  // Update event in UI after successful edit
-  const handleUpdated = (updatedEvent: Partial<Event>) => {
-    if (!selectedEvent) return;
-
-    setEvents((previousEvents) =>
-      previousEvents.map((event) =>
-        event._id === selectedEvent._id
-          ? { ...event, ...updatedEvent }
-          : event,
-      ),
+  const handleUpdate = (updated: Partial<Event>) => {
+    setEvents((prev) =>
+      prev.map((e) => (e._id === selected?._id ? { ...e, ...updated } : e)),
     );
-
-    setEditOpen(false);
-    setSelectedEvent(null);
+    closeModal();
   };
 
-  // Remove event from UI after successful delete
-  const handleDeleted = (id: string) => {
-    setEvents((previousEvents) =>
-      previousEvents.filter((event) => event._id !== id),
-    );
-
-    setDeleteOpen(false);
-    setSelectedEvent(null);
+  const handleDelete = (id: string) => {
+    setEvents((prev) => prev.filter((e) => e._id !== id));
+    closeModal();
   };
 
-  if (isPending || loading) {
+  if (isPending || loading)
     return (
-      <div className="flex min-h-[60vh] items-center justify-center">
-        <Loader2 className="animate-spin text-forest" size={34} />
+      <div className="py-32 text-center text-muted-foreground">
+        Loading your events...
       </div>
     );
-  }
 
-  if (!session) {
+  if (!email)
     return (
-      <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 px-4 text-center">
-        <AlertCircle size={40} className="text-forest dark:text-lime" />
-
-        <h2 className="text-2xl font-extrabold text-foreground">
-          Login Required
-        </h2>
-
-        <p className="text-muted-foreground">
-          Please login to manage your events.
-        </p>
-
-        <Link
-          href="/login"
-          className="rounded-full bg-forest px-6 py-3 font-bold text-lime dark:bg-lime dark:text-forest-deep"
-        >
-          Login Now
-        </Link>
+      <div className="py-32 text-center">
+        Please{" "}
+        <Link href="/sign-in" className="text-primary underline">
+          sign in
+        </Link>{" "}
+        to manage your events.
       </div>
     );
-  }
 
   return (
-    <main className="min-h-screen bg-background px-4 py-12 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-7xl">
-        {/* Heading */}
-        <div className="mb-10 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+    <main className="min-h-screen bg-muted/30">
+      <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+        <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
           <div>
-            <p className="mb-2 text-xs font-black uppercase tracking-[3px] text-forest dark:text-lime">
-              Your Contributions
+            <p className="mb-2 text-sm font-medium text-primary">
+              YOUR DASHBOARD
             </p>
-
-            <h1 className="text-3xl font-extrabold text-foreground sm:text-4xl">
+            <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
               Manage Events
             </h1>
+            <p className="mt-2 text-muted-foreground">
+              Organize and manage your community events.
+            </p>
+          </div>
+        </div>
 
+        <div className="mb-6 rounded-2xl border bg-card p-5">
+          <p className="text-sm text-muted-foreground">Total events created</p>
+          <p className="mt-1 text-3xl font-bold">{events.length}</p>
+        </div>
+
+        {!events.length ? (
+          <div className="rounded-2xl border border-dashed bg-card px-6 py-16 text-center">
+            <CalendarDays
+              className="mx-auto mb-4 text-muted-foreground"
+              size={40}
+            />
+            <h2 className="text-xl font-semibold">No events yet</h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              Manage the community events you have created.
+              Create your first event and bring people together.
             </p>
-          </div>
-
-          <Link
-            href="/events/create"
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-forest px-5 py-3 text-sm font-extrabold text-lime transition hover:-translate-y-0.5 hover:bg-forest-mid dark:bg-lime dark:text-forest-deep"
-          >
-            <Plus size={18} />
-            Create Event
-          </Link>
-        </div>
-
-        {/* Event Count */}
-        <div className="mb-7">
-          <p className="text-sm font-semibold text-muted-foreground">
-            Your Events:{" "}
-            <span className="font-extrabold text-forest dark:text-lime">
-              {events.length}
-            </span>
-          </p>
-        </div>
-
-        {error && (
-          <div className="mb-6 rounded-2xl border border-red-500/20 bg-red-500/5 p-5 text-sm text-red-500">
-            {error}
-          </div>
-        )}
-
-        {/* Empty State */}
-        {!error && events.length === 0 && (
-          <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-forest/20 bg-card px-5 py-16 text-center dark:border-white/15">
-            <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-forest/10 text-forest dark:bg-lime/10 dark:text-lime">
-              <CalendarDays size={30} />
-            </div>
-
-            <h2 className="text-xl font-extrabold text-foreground">
-              No Events Created Yet
-            </h2>
-
-            <p className="mt-2 max-w-md text-sm text-muted-foreground">
-              You haven't created any events yet. Start making a difference
-              in your community by creating your first event.
-            </p>
-
             <Link
               href="/events/create"
-              className="mt-6 inline-flex items-center gap-2 rounded-full bg-forest px-6 py-3 text-sm font-bold text-lime dark:bg-lime dark:text-forest-deep"
+              className="mt-5 inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-primary-foreground"
             >
-              <Plus size={17} />
-              Create Your First Event
+              <Plus size={17} /> Create Event
             </Link>
           </div>
-        )}
-
-        {/* Events Grid */}
-        {!error && events.length > 0 && (
+        ) : (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {events.map((event) => (
               <article
                 key={event._id}
-                className="group overflow-hidden rounded-3xl border border-forest/10 bg-card transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-forest/10 dark:border-white/10"
+                className="group relative overflow-visible rounded-2xl border bg-card shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
               >
-                {/* Thumbnail */}
-                <div className="relative h-52 overflow-hidden bg-forest/10">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                <div className="relative">
                   <img
                     src={event.image}
                     alt={event.title}
-                    className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                    className="h-48 w-full rounded-t-2xl object-cover"
                   />
-
-                  <span className="absolute left-4 top-4 rounded-full bg-lime px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-forest-deep">
+                  <span className="absolute left-3 top-3 rounded-full bg-background/90 px-3 py-1 text-xs font-semibold backdrop-blur">
                     {event.eventType}
                   </span>
+                  <button
+                    onClick={() =>
+                      setMenu(menu === event._id ? null : event._id)
+                    }
+                    aria-label="Event options"
+                    className="absolute right-3 top-3 rounded-full bg-background/90 p-2 shadow-sm transition hover:bg-background"
+                  >
+                    <MoreVertical size={19} />
+                  </button>
+
+                  {menu === event._id && (
+                    <div className="absolute right-3 top-14 z-20 w-44 overflow-hidden rounded-xl border bg-popover p-1 text-popover-foreground shadow-xl">
+                      <Link
+                        href={`/events/${event.allEventId || event._id}`}
+                        onClick={() => setMenu(null)}
+                        className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm hover:bg-muted"
+                      >
+                        <Eye size={16} /> View Event
+                      </Link>
+                      <button
+                        onClick={() => {
+                          setSelected(event);
+                          setModal("edit");
+                          setMenu(null);
+                        }}
+                        className="flex w-full items-center gap-2 rounded-lg px-3 py-2.5 text-sm hover:bg-muted"
+                      >
+                        <Pencil size={16} /> Edit Event
+                      </button>
+                      <button
+                        onClick={() => {
+                          setSelected(event);
+                          setModal("delete");
+                          setMenu(null);
+                        }}
+                        className="flex w-full items-center gap-2 rounded-lg px-3 py-2.5 text-sm text-destructive hover:bg-destructive/10"
+                      >
+                        <Trash2 size={16} /> Delete Event
+                      </button>
+                    </div>
+                  )}
                 </div>
 
-                {/* Content */}
                 <div className="p-5">
-                  <h2 className="line-clamp-1 text-xl font-extrabold text-foreground">
+                  <h2 className="line-clamp-1 text-lg font-bold">
                     {event.title}
                   </h2>
-
-                  <p className="mt-2 line-clamp-2 text-sm leading-6 text-muted-foreground">
+                  <p className="mt-2 line-clamp-2 min-h-10 text-sm text-muted-foreground">
                     {event.description}
                   </p>
-
-                  <div className="mt-5 space-y-3 border-t border-forest/10 pt-4 dark:border-white/10">
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <div className="mt-4 space-y-2 border-t pt-4 text-sm text-muted-foreground">
+                    <p className="flex items-center gap-2">
+                      <MapPin size={16} className="shrink-0 text-primary" />{" "}
+                      <span className="line-clamp-1">{event.location}</span>
+                    </p>
+                    <p className="flex items-center gap-2">
                       <CalendarDays
                         size={16}
-                        className="shrink-0 text-forest dark:text-lime"
-                      />
-
-                      {new Date(event.eventDate).toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      })}
-                    </div>
-
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <MapPin
-                        size={16}
-                        className="shrink-0 text-forest dark:text-lime"
-                      />
-
-                      <span className="line-clamp-1">{event.location}</span>
-                    </div>
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="mt-5 flex flex-wrap items-center gap-2 border-t border-forest/10 pt-4 dark:border-white/10">
-                    <Link
-                      href={`/events/${event._id}`}
-                      className="flex flex-1 items-center justify-center rounded-xl bg-forest px-3 py-2.5 text-sm font-bold text-lime transition hover:bg-forest-mid dark:bg-lime dark:text-forest-deep"
-                    >
-                      View
-                    </Link>
-
-                    <button
-                      type="button"
-                      onClick={() => handleEdit(event)}
-                      className="flex flex-1 items-center justify-center gap-1 rounded-xl border border-forest/20 px-3 py-2.5 text-sm font-bold text-forest transition hover:bg-lime/20 dark:border-white/20 dark:text-lime"
-                    >
-                      <Pencil size={15} />
-                      Edit
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => handleDelete(event)}
-                      className="flex flex-1 items-center justify-center gap-1 rounded-xl bg-red-500/10 px-3 py-2.5 text-sm font-bold text-red-500 transition hover:bg-red-500/20"
-                    >
-                      <Trash2 size={15} />
-                      Delete
-                    </button>
+                        className="shrink-0 text-primary"
+                      />{" "}
+                      {event.eventDate}
+                    </p>
                   </div>
                 </div>
               </article>
             ))}
           </div>
         )}
-      </div>
+      </section>
 
-      {/* Edit Popup Component */}
-      {editOpen && selectedEvent && userEmail && (
+      {selected && modal === "edit" && (
         <EditEvent
-          event={selectedEvent}
-          organizerEmail={userEmail}
-          onClose={() => {
-            setEditOpen(false);
-            setSelectedEvent(null);
-          }}
-          onUpdated={handleUpdated}
+          event={selected}
+          organizerEmail={email}
+          onClose={closeModal}
+          onUpdated={handleUpdate}
         />
       )}
-
-      {/* Delete Popup Component */}
-      {deleteOpen && selectedEvent && userEmail && (
+      {selected && modal === "delete" && (
         <DeleteEvent
-          event={selectedEvent}
-          organizerEmail={userEmail}
-          onClose={() => {
-            setDeleteOpen(false);
-            setSelectedEvent(null);
-          }}
-          onDeleted={handleDeleted}
+          event={selected}
+          organizerEmail={email}
+          onClose={closeModal}
+          onDeleted={handleDelete}
         />
       )}
     </main>

@@ -1,9 +1,9 @@
-
 "use client";
 
 import { useState } from "react";
 import { Loader2, Trash2, X } from "lucide-react";
 import type { Event } from "./page";
+import { toast } from "sonner";
 
 interface DeleteEventProps {
   event: Event;
@@ -40,15 +40,13 @@ export default function DeleteEvent({
       if (!response.ok) {
         throw new Error(data.message || "Failed to delete event.");
       }
-
       onDeleted(event._id);
-      alert("Event deleted successfully!");
+      onClose();
+      toast.success("Event deleted successfully!");
     } catch (error) {
       console.error("Delete error:", error);
 
-      alert(
-        error instanceof Error ? error.message : "Something went wrong.",
-      );
+      alert(error instanceof Error ? error.message : "Something went wrong.");
     } finally {
       setDeleting(false);
     }
@@ -80,10 +78,8 @@ export default function DeleteEvent({
 
         <p className="mt-3 text-sm leading-6 text-muted-foreground">
           Are you sure you want to delete{" "}
-          <span className="font-bold text-foreground">
-            {event.title}
-          </span>
-          ? This action cannot be undone.
+          <span className="font-bold text-foreground">{event.title}</span>? This
+          action cannot be undone.
         </p>
 
         {/* Actions */}
@@ -103,9 +99,7 @@ export default function DeleteEvent({
             disabled={deleting}
             className="flex items-center justify-center gap-2 rounded-xl bg-red-500 px-5 py-3 text-sm font-bold text-white transition hover:bg-red-600 disabled:opacity-50"
           >
-            {deleting && (
-              <Loader2 size={17} className="animate-spin" />
-            )}
+            {deleting && <Loader2 size={17} className="animate-spin" />}
 
             {deleting ? "Deleting..." : "Yes, Delete"}
           </button>

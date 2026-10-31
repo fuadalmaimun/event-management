@@ -18,8 +18,6 @@ export const metadata: Metadata = {
     "Discover volunteer events, connect with your community, and make a positive impact.",
 };
 
-const themeScript = `(function(){try{var s=localStorage.getItem("gt-theme")||"auto";var h=new Date().getHours();var night=h>=18||h<6;var t=s==="auto"?(night?"dark":"light"):s;document.documentElement.classList.toggle("dark",t==="dark");document.documentElement.setAttribute("data-theme",t)}catch(e){}})()`;
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -31,12 +29,8 @@ export default function RootLayout({
       className={`${nunito.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-      </head>
       <body className="flex min-h-full flex-col font-sans">
         <Toaster />
-
         <Navbar />
         {children}
         <Footer />

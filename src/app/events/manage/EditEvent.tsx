@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -54,14 +53,12 @@ export default function EditEvent({
       if (!response.ok) {
         throw new Error(data.message || "Failed to update event.");
       }
-
       onUpdated(formData);
       toast.success("Event updated successfully!");
+      onClose();
     } catch (error) {
       console.error("Update error:", error);
-      alert(
-        error instanceof Error ? error.message : "Something went wrong.",
-      );
+      alert(error instanceof Error ? error.message : "Something went wrong.");
     } finally {
       setUpdating(false);
     }
