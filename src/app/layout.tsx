@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   title: "GoodTogether | Make a Difference",
   description:
     "Discover volunteer events, connect with your community, and make a positive impact.",
+    icons: {
+    icon: "/favicon.jpg", 
+  },
 };
 
 export default function RootLayout({
@@ -28,7 +31,9 @@ export default function RootLayout({
       lang="en"
       className={`${nunito.variable} h-full antialiased`}
       suppressHydrationWarning
+      
     >
+      
       <body className="flex min-h-full flex-col font-sans">
         <Toaster />
         <Navbar />
