@@ -16,6 +16,7 @@ import {
   Mail,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import FeatureCard from "./FeatureCard";
 
 const causes = [
   {
@@ -43,7 +44,8 @@ const causes = [
 const steps = [
   {
     title: "Discover",
-    description: "Explore volunteer opportunities and find a cause you care about.",
+    description:
+      "Explore volunteer opportunities and find a cause you care about.",
     icon: CalendarDays,
   },
   {
@@ -162,8 +164,8 @@ export default function HomeSections() {
               </h2>
 
               <p className="mt-6 max-w-xl text-base leading-8 text-muted-foreground sm:text-lg">
-                GoodTogether brings people together to build stronger,
-                kinder communities.
+                GoodTogether brings people together to build stronger, kinder
+                communities.
               </p>
             </div>
 
@@ -366,8 +368,7 @@ export default function HomeSections() {
             <Eyebrow className="mx-auto">Simple and meaningful</Eyebrow>
 
             <h2 className="mt-6 text-[clamp(2rem,4.4vw,3.5rem)] font-black uppercase leading-[0.95] tracking-[-0.03em] text-foreground">
-              Three steps to{" "}
-              <span className="gt-marker">make an impact.</span>
+              Three steps to <span className="gt-marker">make an impact.</span>
             </h2>
           </div>
 
@@ -453,7 +454,7 @@ export default function HomeSections() {
           </div>
         </div>
       </section>
-
+      <FeatureCard />
       {/* Why GoodTogether */}
       <section className="bg-background px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
         <div className="mx-auto grid max-w-[1440px] items-center gap-12 lg:grid-cols-2 lg:gap-20">
@@ -461,8 +462,7 @@ export default function HomeSections() {
             <Eyebrow>More than volunteering</Eyebrow>
 
             <h2 className="mt-6 max-w-[14ch] text-[clamp(2.1rem,4.6vw,3.75rem)] font-black uppercase leading-[0.94] tracking-[-0.03em] text-foreground">
-              A community built on{" "}
-              <span className="gt-marker">kindness.</span>
+              A community built on <span className="gt-marker">kindness.</span>
             </h2>
 
             <p className="mt-6 max-w-lg text-base leading-8 text-muted-foreground sm:text-lg">
@@ -532,8 +532,26 @@ export default function HomeSections() {
               opportunities.
             </p>
 
-            <p className="mt-7 inline-flex items-center rounded-full bg-forest/10 px-4 py-2 text-xs font-black uppercase tracking-[1.6px] text-forest/75">
-              Newsletter subscription coming soon.
+            {/* Newsletter Form */}
+            <form className="mx-auto mt-8 flex max-w-xl flex-col gap-3 rounded-2xl bg-white p-2 shadow-xl shadow-forest/10 sm:flex-row">
+              <input
+                type="email"
+                name="email"
+                required
+                placeholder="Enter your email address"
+                className="min-w-0 flex-1 rounded-xl bg-transparent px-5 py-4 text-sm text-forest outline-none placeholder:text-forest/50"
+              />
+
+              <button
+                type="submit"
+                className="inline-flex items-center justify-center rounded-xl bg-forest px-7 py-4 text-sm font-bold text-lime transition hover:bg-forest/90"
+              >
+                Subscribe
+              </button>
+            </form>
+
+            <p className="mt-4 text-xs font-medium text-forest/60">
+              No spam. Just good news and opportunities.
             </p>
           </div>
         </div>

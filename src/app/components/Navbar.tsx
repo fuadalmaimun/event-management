@@ -1,6 +1,4 @@
-
 "use client";
-
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -14,6 +12,7 @@ import {
   Users,
   LogOut,
   ChevronDown,
+  LayoutDashboard,
 } from "lucide-react";
 
 import ThemeToggle from "./ThemeToggle";
@@ -141,10 +140,7 @@ export default function Navbar() {
                         )}
                       </div>
 
-                      <ChevronDown
-                        size={15}
-                        className="text-foreground/60"
-                      />
+                      <ChevronDown size={15} className="text-foreground/60" />
 
                       {/* Name Tooltip */}
                       <span className="pointer-events-none absolute right-0 top-12 z-50 whitespace-nowrap rounded-lg bg-forest px-3 py-2 text-xs font-bold text-lime opacity-0 shadow-lg transition group-hover:opacity-100 dark:bg-lime dark:text-forest-deep">
@@ -165,6 +161,15 @@ export default function Navbar() {
                         </div>
 
                         <div className="space-y-1 py-2">
+                          <Link
+                            href="/dashboard"
+                            onClick={() => setProfileOpen(false)}
+                            className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-foreground transition hover:bg-lime/20"
+                          >
+                            <LayoutDashboard size={17} />
+                            Dashboard
+                          </Link>
+
                           <Link
                             href="/events/create"
                             onClick={() => setProfileOpen(false)}
@@ -290,6 +295,15 @@ export default function Navbar() {
                         </p>
                       </div>
                     </div>
+
+                    <Link
+                      href="/dashboard"
+                      onClick={() => setMenuOpen(false)}
+                      className="flex items-center gap-3 rounded-2xl border border-forest/10 bg-card px-4 py-3.5 text-sm font-semibold text-foreground dark:border-white/10"
+                    >
+                      <LayoutDashboard size={17} />
+                      Dashboard
+                    </Link>
 
                     <Link
                       href="/events/create"
