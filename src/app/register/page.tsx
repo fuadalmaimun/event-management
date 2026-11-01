@@ -111,7 +111,7 @@ export default function RegisterPage() {
           Back to home
         </Link>
 
-        <div className="grid overflow-hidden rounded-[32px] border border-forest/10 bg-card shadow-2xl shadow-forest/10 dark:border-white/10 lg:grid-cols-2">
+        <div className="gt-enter grid overflow-hidden rounded-[32px] border border-forest/10 bg-card shadow-2xl shadow-forest/10 dark:border-white/10 lg:grid-cols-2">
           {/* Left panel */}
           <div className="relative hidden flex-col justify-between overflow-hidden bg-forest p-10 text-on-forest lg:flex xl:p-14">
             <div aria-hidden className="absolute inset-0">

@@ -3,6 +3,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
+import Reveal from "@/app/components/Reveal";
 import {
   CalendarDays,
   MapPin,
@@ -103,12 +104,12 @@ export default function UpcomingEventsPage() {
   ];
 
   return (
-    <main className="min-h-screen bg-[#FAF9F6] px-4 py-12 text-[#101C18] dark:bg-[#101C18] dark:text-white">
+    <main className="min-h-screen bg-background px-4 py-12 text-foreground">
       <div className="mx-auto max-w-7xl">
 
         {/* Heading */}
         <div className="mb-10 text-center">
-          <p className="mb-3 font-semibold uppercase tracking-widest text-green-700 dark:text-lime-300">
+          <p className="mb-3 font-semibold uppercase tracking-widest text-forest dark:text-lime">
             Discover & Participate
           </p>
 
@@ -116,21 +117,21 @@ export default function UpcomingEventsPage() {
             Upcoming Events
           </h1>
 
-          <p className="mx-auto mt-4 max-w-2xl text-gray-600 dark:text-gray-300">
+          <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
             Discover meaningful events, connect with people,
             and make a positive difference in your community.
           </p>
         </div>
 
         {/* Search and Category Filter */}
-        <div className="mb-10 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-[#1B3028] sm:p-5">
+        <div className="mb-10 rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-5">
           <div className="flex flex-col gap-4 md:flex-row">
 
             {/* Search Input */}
             <div className="relative flex-1">
               <Search
                 size={20}
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+                className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground"
               />
 
               <input
@@ -138,13 +139,13 @@ export default function UpcomingEventsPage() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search events by title, location..."
-                className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3.5 pl-12 pr-11 text-sm outline-none transition focus:border-green-600 focus:ring-2 focus:ring-green-600/10 dark:border-gray-600 dark:bg-[#101C18] dark:text-white dark:placeholder:text-gray-400 dark:focus:border-lime-300"
+                className="w-full rounded-xl border border-border bg-background py-3.5 pl-12 pr-11 text-sm text-foreground outline-none transition placeholder:text-muted-foreground/70 focus:border-forest focus:ring-2 focus:ring-forest/10 dark:focus:border-lime dark:focus:ring-lime/10"
               />
 
               {search && (
                 <button
                   onClick={() => setSearch("")}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-red-500"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground transition hover:text-red-500"
                   aria-label="Clear search"
                 >
                   <X size={18} />
@@ -156,13 +157,13 @@ export default function UpcomingEventsPage() {
             <div className="relative md:w-64">
               <SlidersHorizontal
                 size={18}
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-green-700 dark:text-lime-300"
+                className="absolute left-4 top-1/2 -translate-y-1/2 text-forest dark:text-lime"
               />
 
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full cursor-pointer appearance-none rounded-xl border border-gray-200 bg-gray-50 py-3.5 pl-11 pr-4 text-sm font-medium outline-none transition focus:border-green-600 dark:border-gray-600 dark:bg-[#101C18] dark:text-white dark:focus:border-lime-300"
+                className="w-full cursor-pointer appearance-none rounded-xl border border-border bg-background py-3.5 pl-11 pr-4 text-sm font-medium text-foreground outline-none transition focus:border-forest dark:focus:border-lime"
               >
                 {categories.map((item) => (
                   <option key={item} value={item}>
@@ -175,10 +176,10 @@ export default function UpcomingEventsPage() {
 
           {/* Search Result Count */}
           {!loading && !error && (
-            <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-gray-100 pt-4 dark:border-gray-700">
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+            <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4">
+              <p className="text-sm text-muted-foreground">
                 Showing{" "}
-                <span className="font-bold text-green-700 dark:text-lime-300">
+                <span className="font-bold text-forest dark:text-lime">
                   {filteredEvents.length}
                 </span>{" "}
                 of {events.length} events
@@ -190,7 +191,7 @@ export default function UpcomingEventsPage() {
                     setSearch("");
                     setCategory("All");
                   }}
-                  className="text-sm font-semibold text-green-700 hover:underline dark:text-lime-300"
+                  className="text-sm font-semibold text-forest hover:underline dark:text-lime"
                 >
                   Clear Filters
                 </button>
@@ -205,15 +206,15 @@ export default function UpcomingEventsPage() {
             {[1, 2, 3, 4, 5, 6].map((item) => (
               <div
                 key={item}
-                className="animate-pulse overflow-hidden rounded-2xl bg-white shadow-sm dark:bg-[#1B3028]"
+                className="animate-pulse overflow-hidden rounded-2xl bg-card shadow-sm"
               >
-                <div className="h-52 bg-gray-200 dark:bg-gray-700" />
+                <div className="h-52 bg-muted" />
 
                 <div className="space-y-4 p-5">
-                  <div className="h-5 w-24 rounded bg-gray-200 dark:bg-gray-700" />
-                  <div className="h-6 w-3/4 rounded bg-gray-200 dark:bg-gray-700" />
-                  <div className="h-4 w-full rounded bg-gray-200 dark:bg-gray-700" />
-                  <div className="h-10 rounded bg-gray-200 dark:bg-gray-700" />
+                  <div className="h-5 w-24 rounded bg-muted" />
+                  <div className="h-6 w-3/4 rounded bg-muted" />
+                  <div className="h-4 w-full rounded bg-muted" />
+                  <div className="h-10 rounded bg-muted" />
                 </div>
               </div>
             ))}
@@ -228,7 +229,7 @@ export default function UpcomingEventsPage() {
 
             <button
               onClick={() => void fetchUpcomingEvents()}
-              className="mt-4 rounded-lg bg-[#173D32] px-5 py-2 text-white"
+              className="mt-4 rounded-lg bg-forest px-5 py-2 text-lime transition hover:bg-forest-mid dark:bg-lime dark:text-forest-deep dark:hover:bg-lime-bright"
             >
               Try Again
             </button>
@@ -238,13 +239,15 @@ export default function UpcomingEventsPage() {
         {/* Events Grid */}
         {!loading && !error && filteredEvents.length > 0 && (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {filteredEvents.map((event) => (
-              <article
+            {filteredEvents.map((event, index) => (
+              <Reveal
                 key={event._id}
-                className="group overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl dark:border-gray-700 dark:bg-[#1B3028]"
+                className="h-full"
+                delay={(index % 3) * 80}
               >
+                <article className="group h-full overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition hover:-translate-y-1 hover:border-lime hover:shadow-xl">
                 {/* Thumbnail */}
-                <div className="relative h-52 overflow-hidden bg-gray-100 dark:bg-gray-800">
+                <div className="relative h-52 overflow-hidden bg-muted">
                   {event.image ? (
                     <img
                       src={event.image}
@@ -252,12 +255,12 @@ export default function UpcomingEventsPage() {
                       className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
                     />
                   ) : (
-                    <div className="flex h-full items-center justify-center text-gray-500">
+                    <div className="flex h-full items-center justify-center text-muted-foreground">
                       No Image Available
                     </div>
                   )}
 
-                  <span className="absolute left-4 top-4 rounded-full bg-[#DDF477] px-3 py-1 text-xs font-bold text-[#173D32]">
+                  <span className="absolute left-4 top-4 rounded-full bg-lime px-3 py-1 text-xs font-bold text-forest">
                     {event.eventType}
                   </span>
                 </div>
@@ -268,15 +271,15 @@ export default function UpcomingEventsPage() {
                     {event.title}
                   </h2>
 
-                  <p className="mt-3 line-clamp-2 text-sm leading-6 text-gray-600 dark:text-gray-300">
+                  <p className="mt-3 line-clamp-2 text-sm leading-6 text-muted-foreground">
                     {event.description}
                   </p>
 
                   {/* Location */}
-                  <div className="mt-5 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+                  <div className="mt-5 flex items-center gap-2 text-sm text-muted-foreground">
                     <MapPin
                       size={17}
-                      className="shrink-0 text-green-700 dark:text-lime-300"
+                      className="shrink-0 text-forest dark:text-lime"
                     />
                     <span className="line-clamp-1">
                       {event.location}
@@ -284,10 +287,10 @@ export default function UpcomingEventsPage() {
                   </div>
 
                   {/* Date */}
-                  <div className="mt-3 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+                  <div className="mt-3 flex items-center gap-2 text-sm text-muted-foreground">
                     <CalendarDays
                       size={17}
-                      className="shrink-0 text-green-700 dark:text-lime-300"
+                      className="shrink-0 text-forest dark:text-lime"
                     />
                     <span>
                       {new Date(event.eventDate).toLocaleDateString(
@@ -304,29 +307,30 @@ export default function UpcomingEventsPage() {
                   {/* View Event */}
                   <Link
                     href={`/events/${event._id}`}
-                    className="mt-6 flex w-full items-center justify-center rounded-lg bg-[#173D32] px-5 py-3 font-semibold text-white transition hover:bg-[#245A49] dark:bg-[#DDF477] dark:text-[#173D32] dark:hover:bg-lime-300"
+                    className="mt-6 flex w-full items-center justify-center rounded-lg bg-forest px-5 py-3 font-semibold text-lime transition hover:bg-forest-mid dark:bg-lime dark:text-forest-deep dark:hover:bg-lime-bright"
                   >
                     View Event
                   </Link>
                 </div>
-              </article>
+                </article>
+              </Reveal>
             ))}
           </div>
         )}
 
         {/* No Matching Events */}
         {!loading && !error && filteredEvents.length === 0 && (
-          <div className="rounded-2xl border border-dashed border-gray-300 px-5 py-16 text-center dark:border-gray-600">
+          <div className="rounded-2xl border border-dashed border-border px-5 py-16 text-center">
             <Search
               size={48}
-              className="mx-auto mb-4 text-green-700 dark:text-lime-300"
+              className="mx-auto mb-4 text-forest dark:text-lime"
             />
 
             <h2 className="text-2xl font-bold">
               No Events Found
             </h2>
 
-            <p className="mt-3 text-gray-600 dark:text-gray-300">
+            <p className="mt-3 text-muted-foreground">
               No events match your search. Try another keyword or category.
             </p>
 
@@ -335,7 +339,7 @@ export default function UpcomingEventsPage() {
                 setSearch("");
                 setCategory("All");
               }}
-              className="mt-6 rounded-lg bg-[#173D32] px-6 py-3 font-semibold text-white transition hover:bg-[#245A49] dark:bg-[#DDF477] dark:text-[#173D32]"
+              className="mt-6 rounded-lg bg-forest px-6 py-3 font-semibold text-lime transition hover:bg-forest-mid dark:bg-lime dark:text-forest-deep dark:hover:bg-lime-bright"
             >
               Show All Events
             </button>

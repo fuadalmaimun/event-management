@@ -145,7 +145,7 @@ const JoinButton = ({ event }: { event: Event }) => {
       className={`group flex w-full items-center justify-center gap-3 rounded-xl px-7 py-4 text-base font-bold shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl active:scale-95 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto ${
         isJoined
           ? "border border-red-200 bg-red-50 text-red-600 hover:border-red-500 hover:bg-red-500 hover:text-white dark:border-red-900 dark:bg-red-950/40 dark:text-red-400"
-          : "bg-gradient-to-r from-emerald-500 to-teal-600 text-white hover:from-emerald-600 hover:to-teal-700"
+          : "bg-gradient-to-r from-forest to-forest-mid text-lime hover:from-forest-mid hover:to-forest-soft dark:from-lime dark:to-lime-bright dark:text-forest-deep dark:hover:from-lime-bright dark:hover:to-lime"
       }`}
     >
       {isPending ? (

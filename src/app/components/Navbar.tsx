@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   ArrowUpRight,
@@ -28,6 +28,16 @@ export default function Navbar() {
 
   const router = useRouter();
 
+  // Elevate the bar once the page is scrolled for a layered, premium feel.
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   const { data: session, isPending } = authClient.useSession();
 
   const user = session?.user;
@@ -54,7 +64,13 @@ export default function Navbar() {
   const userImage = user?.image;
 
   return (
-    <header className="sticky top-0 z-50 border-b border-forest/10 bg-background/85 backdrop-blur-xl dark:border-white/10">
+    <header
+      className={`sticky top-0 z-50 border-b border-forest/10 bg-background/85 backdrop-blur-xl transition-shadow duration-300 dark:border-white/10 ${
+        scrolled
+          ? "shadow-lg shadow-forest/10 dark:shadow-black/40"
+          : "shadow-none"
+      }`}
+    >
       <nav className="mx-auto flex max-w-[1440px] items-center justify-between gap-3 px-4 py-3 sm:px-6 sm:py-3.5 lg:px-10">
         {/* Brand */}
         <Link

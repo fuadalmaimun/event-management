@@ -63,28 +63,28 @@ const FeatureCard = () => {
   }, []);
 
   return (
-    <section className="relative overflow-hidden bg-gray-50 py-20 transition-colors duration-300 dark:bg-[#0b1712]">
+    <section className="relative overflow-hidden bg-background py-20 transition-colors duration-300">
       {/* Background Decoration */}
-      <div className="pointer-events-none absolute -left-32 top-20 h-72 w-72 rounded-full bg-green-200/30 blur-3xl dark:bg-green-500/10" />
-      <div className="pointer-events-none absolute -right-32 bottom-10 h-72 w-72 rounded-full bg-emerald-200/30 blur-3xl dark:bg-emerald-500/10" />
+      <div className="pointer-events-none absolute -left-32 top-20 h-72 w-72 rounded-full bg-lime-mist/70 blur-3xl dark:bg-lime/10" />
+      <div className="pointer-events-none absolute -right-32 bottom-10 h-72 w-72 rounded-full bg-lime/15 blur-3xl dark:bg-lime/10" />
 
       <div className="relative container mx-auto px-4">
         {/* Section Header */}
         <div className="mb-12 flex flex-col items-center justify-between gap-6 text-center md:flex-row md:text-left">
           <div>
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-green-200 bg-green-50 px-4 py-2 text-sm font-semibold text-green-700 dark:border-green-900 dark:bg-green-950/50 dark:text-green-400">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-forest/10 bg-lime-mist px-4 py-2 text-sm font-semibold text-forest dark:border-lime/25 dark:bg-lime/10 dark:text-lime">
               <Sparkles size={16} />
               Make an Impact Together
             </div>
 
-            <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl md:text-5xl dark:text-white">
+            <h2 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl md:text-5xl">
               Explore Featured{" "}
-              <span className="text-green-600 dark:text-green-400">
+              <span className="text-forest dark:text-lime">
                 Events
               </span>
             </h2>
 
-            <p className="mt-4 max-w-xl text-sm leading-7 text-gray-600 sm:text-base dark:text-gray-400">
+            <p className="mt-4 max-w-xl text-sm leading-7 text-muted-foreground sm:text-base">
               Discover meaningful events, connect with your community,
               and become part of something bigger.
             </p>
@@ -92,7 +92,7 @@ const FeatureCard = () => {
 
           <Link
             href="/events"
-            className="group inline-flex shrink-0 items-center gap-2 rounded-full bg-green-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-green-600/20 transition hover:-translate-y-1 hover:bg-green-700 dark:bg-green-500 dark:text-gray-950 dark:hover:bg-green-400"
+            className="group inline-flex shrink-0 items-center gap-2 rounded-full bg-forest px-6 py-3 text-sm font-bold text-lime shadow-lg shadow-forest/20 transition hover:-translate-y-1 hover:bg-forest-mid dark:bg-lime dark:text-forest-deep dark:shadow-lime/20 dark:hover:bg-lime-bright"
           >
             Explore All Events
             <ArrowUpRight
@@ -104,12 +104,12 @@ const FeatureCard = () => {
 
         {/* Events Carousel */}
         {events.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-gray-300 py-16 text-center dark:border-gray-700">
-            <CalendarDays className="mx-auto mb-4 text-green-600 dark:text-green-400" size={36} />
-            <h3 className="text-lg font-bold text-gray-800 dark:text-white">
+          <div className="rounded-2xl border border-dashed border-border py-16 text-center">
+            <CalendarDays className="mx-auto mb-4 text-forest dark:text-lime" size={36} />
+            <h3 className="text-lg font-bold text-foreground">
               No Upcoming Events
             </h3>
-            <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+            <p className="mt-2 text-sm text-muted-foreground">
               Check back later for exciting community events.
             </p>
           </div>
@@ -127,7 +127,7 @@ const FeatureCard = () => {
                   key={event._id}
                   className="basis-full pl-5 sm:basis-1/2 lg:basis-1/3"
                 >
-                  <div className="group h-full overflow-hidden rounded-2xl border border-gray-200/80 bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-green-300 hover:shadow-xl hover:shadow-green-900/10 dark:border-gray-800 dark:bg-[#12251b] dark:hover:border-green-800 dark:hover:shadow-green-950/30">
+                  <div className="group h-full overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-lime hover:shadow-xl hover:shadow-forest/10">
                     {/* Image */}
                     <div className="relative h-56 overflow-hidden">
                       <Image
@@ -151,14 +151,14 @@ const FeatureCard = () => {
                         </p>
                       </div>
 
-                      <div className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-green-700 shadow-md transition hover:scale-110 dark:bg-[#12251b] dark:text-green-400">
+                      <div className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-card/90 text-forest shadow-md transition hover:scale-110 dark:text-lime">
                         <Heart size={17} />
                       </div>
                     </div>
 
                     {/* Content */}
                     <div className="flex min-h-[235px] flex-col p-5">
-                      <div className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-green-700 dark:text-green-400">
+                      <div className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-forest dark:text-lime">
                         <CalendarDays size={15} />
                         {new Date(event.eventDate).toLocaleDateString(
                           "en-US",
@@ -170,18 +170,18 @@ const FeatureCard = () => {
                         )}
                       </div>
 
-                      <h3 className="line-clamp-1 text-xl font-bold text-gray-900 transition-colors group-hover:text-green-700 dark:text-white dark:group-hover:text-green-400">
+                      <h3 className="line-clamp-1 text-xl font-bold text-card-foreground transition-colors group-hover:text-forest dark:group-hover:text-lime">
                         {event.title}
                       </h3>
 
-                      <p className="mt-3 line-clamp-2 text-sm leading-6 text-gray-600 dark:text-gray-400">
+                      <p className="mt-3 line-clamp-2 text-sm leading-6 text-muted-foreground">
                         {event.description}
                       </p>
 
                       <div className="mt-auto pt-6">
                         <Link
                           href={`/events/${event._id}`}
-                          className="group/button flex w-full items-center justify-center gap-2 rounded-xl bg-green-50 px-4 py-3 text-sm font-bold text-green-700 transition hover:bg-green-600 hover:text-white dark:bg-green-950/50 dark:text-green-400 dark:hover:bg-green-500 dark:hover:text-gray-950"
+                          className="group/button flex w-full items-center justify-center gap-2 rounded-xl bg-lime-mist px-4 py-3 text-sm font-bold text-forest transition hover:bg-forest hover:text-lime dark:bg-lime/15 dark:text-lime dark:hover:bg-lime dark:hover:text-forest-deep"
                         >
                           View Event Details
                           <ArrowUpRight
@@ -198,13 +198,13 @@ const FeatureCard = () => {
 
             {/* Carousel Controls */}
             <div className="mt-8 flex items-center justify-center gap-3">
-              <CarouselPrevious className="static size-11 translate-y-0 rounded-full border-gray-300 bg-white text-gray-700 shadow-sm hover:bg-green-600 hover:text-white dark:border-gray-700 dark:bg-[#12251b] dark:text-white dark:hover:bg-green-500 dark:hover:text-gray-950" />
+              <CarouselPrevious className="static size-11 translate-y-0 rounded-full border-border bg-card text-foreground shadow-sm transition hover:bg-forest hover:text-lime dark:hover:bg-lime dark:hover:text-forest-deep" />
 
-              <span className="text-xs font-semibold tracking-widest text-gray-500 dark:text-gray-400">
+              <span className="text-xs font-semibold tracking-widest text-muted-foreground">
                 DISCOVER MORE
               </span>
 
-              <CarouselNext className="static size-11 translate-y-0 rounded-full border-gray-300 bg-white text-gray-700 shadow-sm hover:bg-green-600 hover:text-white dark:border-gray-700 dark:bg-[#12251b] dark:text-white dark:hover:bg-green-500 dark:hover:text-gray-950" />
+              <CarouselNext className="static size-11 translate-y-0 rounded-full border-border bg-card text-foreground shadow-sm transition hover:bg-forest hover:text-lime dark:hover:bg-lime dark:hover:text-forest-deep" />
             </div>
           </Carousel>
         )}

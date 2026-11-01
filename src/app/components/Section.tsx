@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import FeatureCard from "./FeatureCard";
+import Reveal from "./Reveal";
 
 const causes = [
   {
@@ -114,11 +115,7 @@ const whyItems = [
   },
 ];
 
-function Eyebrow({
-  children,
-  tone = "light",
-  className,
-}: {
+function Eyebrow({ children, tone = "light", className,}: {
   children: ReactNode;
   tone?: "light" | "dark";
   className?: string;
@@ -149,6 +146,7 @@ export default function HomeSections() {
   return (
     <>
       {/* Impact */}
+      <Reveal>
       <section
         id="impact"
         className="relative bg-background px-5 pb-20 pt-24 sm:px-8 sm:pt-28 lg:px-12 lg:pb-28 lg:pt-32"
@@ -218,8 +216,10 @@ export default function HomeSections() {
           </div>
         </div>
       </section>
+      </Reveal>
 
       {/* Causes */}
+      <Reveal>
       <section className="relative overflow-hidden bg-muted/60 px-5 py-20 sm:px-8 lg:px-12 lg:py-28 dark:bg-muted/25">
         <div
           aria-hidden
@@ -281,7 +281,7 @@ export default function HomeSections() {
                   </p>
 
                   <Link
-                    href="/upcoming-events"
+                    href="/events"
                     className={cn(
                       "relative mt-6 inline-flex items-center gap-2 text-sm font-black",
                       isDeep ? "text-lime" : "text-forest dark:text-lime",
@@ -299,8 +299,10 @@ export default function HomeSections() {
           </div>
         </div>
       </section>
+      </Reveal>
 
       {/* Upcoming Events - API later */}
+      <Reveal>
       <section className="relative isolate overflow-hidden bg-forest-deep px-5 py-20 text-on-forest sm:px-8 lg:px-12 lg:py-28">
         <div aria-hidden className="absolute inset-0 -z-10">
           <div className="absolute inset-0 gt-grid opacity-70" />
@@ -323,7 +325,7 @@ export default function HomeSections() {
             </div>
 
             <Link
-              href="/upcoming-events"
+              href="/events"
               className="inline-flex shrink-0 items-center gap-2 self-start rounded-full border border-lime/40 px-5 py-3 text-xs font-black uppercase tracking-[1.8px] text-lime transition duration-300 hover:-translate-y-0.5 hover:bg-lime hover:text-forest sm:self-auto"
             >
               View all events <ArrowUpRight size={16} />
@@ -346,8 +348,8 @@ export default function HomeSections() {
               </h3>
 
               <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-on-forest/75 sm:text-base">
-                Upcoming volunteer opportunities will appear here. Events will
-                be loaded from MongoDB.
+                Fresh volunteer opportunities are added all the time. Browse
+                what&apos;s open right now and find your next way to give back.
               </p>
 
               <Link
@@ -360,8 +362,10 @@ export default function HomeSections() {
           </div>
         </div>
       </section>
+      </Reveal>
 
       {/* How it works */}
+      <Reveal>
       <section className="bg-background px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
         <div className="mx-auto max-w-[1440px]">
           <div className="mx-auto max-w-2xl text-center">
@@ -407,8 +411,10 @@ export default function HomeSections() {
           </div>
         </div>
       </section>
+      </Reveal>
 
       {/* Gallery */}
+      <Reveal>
       <section
         id="community"
         className="bg-muted/60 px-5 py-20 sm:px-8 lg:px-12 lg:py-28 dark:bg-muted/25"
@@ -454,8 +460,10 @@ export default function HomeSections() {
           </div>
         </div>
       </section>
+      </Reveal>
       <FeatureCard />
       {/* Why GoodTogether */}
+      <Reveal>
       <section className="bg-background px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
         <div className="mx-auto grid max-w-[1440px] items-center gap-12 lg:grid-cols-2 lg:gap-20">
           <div>
@@ -508,8 +516,10 @@ export default function HomeSections() {
           </div>
         </div>
       </section>
+      </Reveal>
 
       {/* Newsletter - UI only */}
+      <Reveal>
       <section className="bg-background px-5 pb-20 sm:px-8 lg:px-12">
         <div className="relative mx-auto max-w-[1440px] overflow-hidden rounded-[40px] bg-lime px-6 py-14 text-center text-forest sm:px-12 sm:py-16">
           <div aria-hidden className="absolute inset-0">
@@ -533,7 +543,7 @@ export default function HomeSections() {
             </p>
 
             {/* Newsletter Form */}
-            <form className="mx-auto mt-8 flex max-w-xl flex-col gap-3 rounded-2xl bg-white p-2 shadow-xl shadow-forest/10 sm:flex-row">
+            <div className="mx-auto mt-8 flex max-w-xl flex-col gap-3 rounded-2xl bg-white p-2 shadow-xl shadow-forest/10 sm:flex-row">
               <input
                 type="email"
                 name="email"
@@ -543,12 +553,11 @@ export default function HomeSections() {
               />
 
               <button
-                type="submit"
                 className="inline-flex items-center justify-center rounded-xl bg-forest px-7 py-4 text-sm font-bold text-lime transition hover:bg-forest/90"
               >
                 Subscribe
               </button>
-            </form>
+            </div>
 
             <p className="mt-4 text-xs font-medium text-forest/60">
               No spam. Just good news and opportunities.
@@ -556,8 +565,10 @@ export default function HomeSections() {
           </div>
         </div>
       </section>
+      </Reveal>
 
       {/* Final CTA */}
+      <Reveal>
       <section className="relative isolate overflow-hidden bg-gradient-to-b from-forest to-forest-deep px-5 py-20 text-on-forest sm:px-8 lg:px-12 lg:py-24">
         <div aria-hidden className="absolute inset-0 -z-10">
           <div className="absolute inset-0 gt-grid opacity-60" />
@@ -589,6 +600,7 @@ export default function HomeSections() {
           </Link>
         </div>
       </section>
+      </Reveal>
     </>
   );
 }

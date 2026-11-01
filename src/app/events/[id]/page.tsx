@@ -26,7 +26,8 @@ interface Event {
   image: string;
   location: string;
   eventDate: string;
-  email: string;
+  email?: string;
+  organizerEmail?: string;
 }
 
 interface Props {
@@ -64,7 +65,7 @@ const DetailsPage = async ({ params }: Props) => {
   });
 
   return (
-    <main className="min-h-screen bg-[#f8faf9] text-gray-900 dark:bg-[#0b1512] dark:text-white">
+    <main className="min-h-screen bg-background text-foreground">
 
       {/* Hero Section */}
       <section className="relative">
@@ -94,7 +95,7 @@ const DetailsPage = async ({ params }: Props) => {
 
               <div className="max-w-3xl pb-4 text-white">
 
-                <span className="mb-5 inline-flex items-center gap-2 rounded-full bg-emerald-500 px-4 py-2 text-xs font-bold uppercase tracking-wider shadow-lg">
+                <span className="mb-5 inline-flex items-center gap-2 rounded-full bg-lime px-4 py-2 text-xs font-bold uppercase tracking-wider text-forest shadow-lg">
                   <Heart size={14} />
                   {event.eventType}
                 </span>
@@ -106,12 +107,12 @@ const DetailsPage = async ({ params }: Props) => {
                 <div className="mt-6 flex flex-col gap-3 text-sm text-white/90 sm:flex-row sm:flex-wrap sm:gap-6">
 
                   <span className="flex items-center gap-2">
-                    <MapPin size={18} className="shrink-0 text-emerald-400" />
+                    <MapPin size={18} className="shrink-0 text-lime" />
                     {event.location}
                   </span>
 
                   <span className="flex items-center gap-2">
-                    <CalendarDays size={18} className="shrink-0 text-emerald-400" />
+                    <CalendarDays size={18} className="shrink-0 text-lime" />
                     {formattedDate}
                   </span>
 
@@ -131,7 +132,7 @@ const DetailsPage = async ({ params }: Props) => {
 
           {/* Section Heading */}
           <div className="mb-7">
-            <p className="text-sm font-bold uppercase tracking-[3px] text-emerald-600 dark:text-emerald-400">
+            <p className="text-sm font-bold uppercase tracking-[3px] text-forest dark:text-lime">
               About this event
             </p>
 
@@ -139,7 +140,7 @@ const DetailsPage = async ({ params }: Props) => {
               Be a part of something meaningful.
             </h2>
 
-            <p className="mt-3 max-w-2xl text-sm leading-7 text-gray-500 dark:text-gray-400">
+            <p className="mt-3 max-w-2xl text-sm leading-7 text-muted-foreground">
               Every small action can create a meaningful impact.
               Discover this community initiative and become part
               of something positive.
@@ -147,10 +148,10 @@ const DetailsPage = async ({ params }: Props) => {
           </div>
 
           {/* Description Card */}
-          <div className="rounded-3xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-[#12221c] sm:p-8">
+          <div className="rounded-3xl border border-border bg-card p-5 shadow-sm sm:p-8">
 
             <div className="flex items-center gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-100 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-lime-mist text-forest dark:bg-lime/15 dark:text-lime">
                 <HandHeart size={23} />
               </div>
 
@@ -159,11 +160,11 @@ const DetailsPage = async ({ params }: Props) => {
               </h3>
             </div>
 
-            <p className="mt-5 whitespace-pre-line text-sm leading-8 text-gray-600 dark:text-gray-300 sm:text-base">
+            <p className="mt-5 whitespace-pre-line text-sm leading-8 text-muted-foreground sm:text-base">
               {event.description}
             </p>
 
-            <div className="my-8 border-t border-gray-100 dark:border-gray-700" />
+            <div className="my-8 border-t border-border" />
 
             <h3 className="text-xl font-bold">
               Why Participate?
@@ -172,52 +173,52 @@ const DetailsPage = async ({ params }: Props) => {
             <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
 
               <div className="flex gap-4">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600 dark:bg-emerald-500/10">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-lime-mist text-forest dark:bg-lime/15">
                   <HandHeart size={23} />
                 </div>
 
                 <div>
                   <h4 className="font-bold">Help Your Community</h4>
-                  <p className="mt-1 text-sm leading-6 text-gray-500 dark:text-gray-400">
+                  <p className="mt-1 text-sm leading-6 text-muted-foreground">
                     Make a positive difference in people's lives.
                   </p>
                 </div>
               </div>
 
               <div className="flex gap-4">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-100 text-blue-600 dark:bg-blue-500/10">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-lime-mist text-forest dark:bg-lime/15 dark:text-lime">
                   <Users size={23} />
                 </div>
 
                 <div>
                   <h4 className="font-bold">Meet Good People</h4>
-                  <p className="mt-1 text-sm leading-6 text-gray-500 dark:text-gray-400">
+                  <p className="mt-1 text-sm leading-6 text-muted-foreground">
                     Connect with people who care about others.
                   </p>
                 </div>
               </div>
 
               <div className="flex gap-4">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-amber-100 text-amber-600 dark:bg-amber-500/10">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-lime-mist text-forest dark:bg-lime/15 dark:text-lime">
                   <Leaf size={23} />
                 </div>
 
                 <div>
                   <h4 className="font-bold">Create Real Impact</h4>
-                  <p className="mt-1 text-sm leading-6 text-gray-500 dark:text-gray-400">
+                  <p className="mt-1 text-sm leading-6 text-muted-foreground">
                     Contribute to a better and healthier world.
                   </p>
                 </div>
               </div>
 
               <div className="flex gap-4">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-purple-100 text-purple-600 dark:bg-purple-500/10">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-lime-mist text-forest dark:bg-lime/15 dark:text-lime">
                   <Heart size={23} />
                 </div>
 
                 <div>
                   <h4 className="font-bold">Spread Kindness</h4>
-                  <p className="mt-1 text-sm leading-6 text-gray-500 dark:text-gray-400">
+                  <p className="mt-1 text-sm leading-6 text-muted-foreground">
                     Every small action can make a big difference.
                   </p>
                 </div>
@@ -227,10 +228,10 @@ const DetailsPage = async ({ params }: Props) => {
           </div>
 
           {/* Organizer Card */}
-          <div className="mt-7 rounded-3xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-[#12221c] sm:p-7">
+          <div className="mt-7 rounded-3xl border border-border bg-card p-5 shadow-sm sm:p-7">
 
             <div className="flex items-center gap-2">
-              <ShieldCheck size={21} className="text-emerald-500" />
+              <ShieldCheck size={21} className="text-forest dark:text-lime" />
               <h3 className="text-xl font-bold">
                 Event Organizer
               </h3>
@@ -238,7 +239,7 @@ const DetailsPage = async ({ params }: Props) => {
 
             <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-center">
 
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400">
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-lime-mist text-forest dark:bg-lime/15 dark:text-lime">
                 <Users size={25} />
               </div>
 
@@ -247,12 +248,12 @@ const DetailsPage = async ({ params }: Props) => {
                   Community Organizer
                 </h4>
 
-                <p className="mt-1 break-all text-sm text-gray-500 dark:text-gray-400">
-                  {event.email}
+                <p className="mt-1 break-all text-sm text-muted-foreground">
+                  {event.organizerEmail || event.email || "Not provided"}
                 </p>
               </div>
 
-              <div className="flex w-fit items-center gap-1 rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-bold text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400 sm:ml-auto">
+              <div className="flex w-fit items-center gap-1 rounded-full bg-lime-mist px-3 py-1.5 text-xs font-bold text-forest dark:bg-lime/15 dark:text-lime sm:ml-auto">
                 <ShieldCheck size={15} />
                 Organizer
               </div>
@@ -265,9 +266,9 @@ const DetailsPage = async ({ params }: Props) => {
         {/* Right Sidebar */}
         <aside className="min-w-0">
 
-          <div className="rounded-3xl border border-gray-100 bg-white p-5 shadow-xl shadow-gray-200/40 dark:border-gray-800 dark:bg-[#12221c] dark:shadow-black/20 sm:p-7 lg:sticky lg:top-24">
+          <div className="rounded-3xl border border-border bg-card p-5 shadow-xl shadow-forest/10 dark:shadow-black/30 sm:p-7 lg:sticky lg:top-24">
 
-            <div className="flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+            <div className="flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-forest dark:text-lime">
               <Sparkles size={17} />
               Join the movement
             </div>
@@ -276,7 +277,7 @@ const DetailsPage = async ({ params }: Props) => {
               Your presence matters.
             </h3>
 
-            <p className="mt-3 text-sm leading-7 text-gray-500 dark:text-gray-400">
+            <p className="mt-3 text-sm leading-7 text-muted-foreground">
               Be part of this community initiative and help
               create a positive impact.
             </p>
@@ -285,12 +286,12 @@ const DetailsPage = async ({ params }: Props) => {
             <div className="my-7 space-y-5">
 
               <div className="flex items-center gap-4">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-600 dark:bg-emerald-500/10">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-lime-mist text-forest dark:bg-lime/15">
                   <CalendarDays size={21} />
                 </div>
 
                 <div className="min-w-0">
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                  <p className="text-xs text-muted-foreground">
                     Event Date
                   </p>
 
@@ -301,12 +302,12 @@ const DetailsPage = async ({ params }: Props) => {
               </div>
 
               <div className="flex items-center gap-4">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-100 text-blue-600 dark:bg-blue-500/10">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-lime-mist text-forest dark:bg-lime/15 dark:text-lime">
                   <Clock size={21} />
                 </div>
 
                 <div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                  <p className="text-xs text-muted-foreground">
                     Event Time
                   </p>
 
@@ -317,12 +318,12 @@ const DetailsPage = async ({ params }: Props) => {
               </div>
 
               <div className="flex items-center gap-4">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-amber-100 text-amber-600 dark:bg-amber-500/10">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-lime-mist text-forest dark:bg-lime/15 dark:text-lime">
                   <MapPin size={21} />
                 </div>
 
                 <div className="min-w-0">
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                  <p className="text-xs text-muted-foreground">
                     Location
                   </p>
 
@@ -335,9 +336,9 @@ const DetailsPage = async ({ params }: Props) => {
             </div>
 
             {/* Info Box */}
-            <div className="rounded-2xl bg-emerald-50 p-4 dark:bg-emerald-500/10">
+            <div className="rounded-2xl bg-lime-mist p-4 dark:bg-lime/10">
 
-              <div className="flex items-center gap-2 text-emerald-700 dark:text-emerald-400">
+              <div className="flex items-center gap-2 text-forest dark:text-lime">
                 <CheckCircle2 size={18} />
 
                 <span className="text-sm font-bold">
@@ -345,7 +346,7 @@ const DetailsPage = async ({ params }: Props) => {
                 </span>
               </div>
 
-              <p className="mt-2 text-xs leading-5 text-emerald-800/70 dark:text-emerald-300/70">
+              <p className="mt-2 text-xs leading-5 text-forest/75 dark:text-lime/75">
                 Join this event and become part of something bigger.
               </p>
 
@@ -356,7 +357,7 @@ const DetailsPage = async ({ params }: Props) => {
               <JoinButton event={event} />
             </div>
 
-            <p className="mt-4 text-center text-xs text-gray-400">
+            <p className="mt-4 text-center text-xs text-muted-foreground/70">
               Login required to join this event.
             </p>
 

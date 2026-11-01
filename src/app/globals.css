@@ -63,6 +63,7 @@
 
 :root {
   /* Light theme (6 AM – 6 PM) */
+  color-scheme: light;
   --background: #f4f7ef;
   --foreground: #0d2a1c;
   --card: #ffffff;
@@ -81,12 +82,16 @@
   --border: #dbe4d3;
   --input: #dbe4d3;
   --ring: #2e7a4c;
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
+  /* Brand-consistent chart palette (Forest → Lime ramp) */
+  --chart-1: #1b5e3a;
+  --chart-2: #3f9d55;
+  --chart-3: #7dbf3c;
+  --chart-4: #a9d441;
+  --chart-5: #56685c;
   --radius: 1rem;
+  /* Themed scrollbar thumb */
+  --gt-scrollbar: rgba(18, 58, 38, 0.32);
+  --gt-scrollbar-hover: rgba(18, 58, 38, 0.55);
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
@@ -111,6 +116,7 @@
 
 .dark {
   /* Dark theme (6 PM – 6 AM, or manual) */
+  color-scheme: dark;
   --background: #06130d;
   --foreground: #ebf5e7;
   --card: #0b2116;
@@ -129,6 +135,15 @@
   --border: #ffffff1a;
   --input: #ffffff1f;
   --ring: #a9d441;
+  /* Brighter chart palette so data pops on dark surfaces */
+  --chart-1: #4fc27f;
+  --chart-2: #7dd35a;
+  --chart-3: #a9d441;
+  --chart-4: #ddf477;
+  --chart-5: #9cb2a4;
+  /* Themed scrollbar thumb */
+  --gt-scrollbar: rgba(201, 243, 91, 0.3);
+  --gt-scrollbar-hover: rgba(201, 243, 91, 0.55);
   --sidebar: oklch(0.205 0 0);
   --sidebar-foreground: oklch(0.985 0 0);
   --sidebar-primary: oklch(0.488 0.243 264.376);
@@ -150,6 +165,44 @@
 
   html {
     @apply font-sans scroll-smooth;
+  }
+
+  /* Consistent, brand-tinted keyboard focus ring */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  /* Slim, themed scrollbars (both engines) */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--gt-scrollbar) transparent;
+  }
+
+  ::-webkit-scrollbar {
+    width: 11px;
+    height: 11px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--gt-scrollbar);
+    border: 3px solid transparent;
+    border-radius: 999px;
+    background-clip: content-box;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--gt-scrollbar-hover);
+  }
+
+  /* Balanced headline wrapping for a more editorial look */
+  h1,
+  h2 {
+    text-wrap: balance;
   }
 
   ::selection {
@@ -200,6 +253,33 @@
   animation: gt-spin 34s linear infinite;
 }
 
+/* Scroll-reveal entrance (paired with the <Reveal> component) */
+.gt-reveal {
+  opacity: 0;
+  transform: translate3d(0, 30px, 0);
+  transition:
+    opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.gt-reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* If scripting is unavailable, never hide content behind an animation */
+@media (scripting: none) {
+  .gt-reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* On-load entrance for above-the-fold hero content */
+.gt-enter {
+  animation: gt-enter 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 @keyframes gt-float {
   0%,
   100% {
@@ -216,10 +296,28 @@
   }
 }
 
+@keyframes gt-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 26px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .gt-float,
-  .gt-spin-slow {
+  .gt-spin-slow,
+  .gt-enter {
     animation: none !important;
+  }
+
+  .gt-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 
   html {

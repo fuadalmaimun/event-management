@@ -61,7 +61,7 @@ export default function Footer() {
                 Home
               </Link>
               <Link
-                href="/upcoming-events"
+                href="/events"
                 className="w-fit font-semibold transition duration-300 hover:translate-x-1 hover:text-lime"
               >
                 Upcoming Events
@@ -100,13 +100,13 @@ export default function Footer() {
                 Log In
               </Link>
               <Link
-                href="/add-event"
+                href="/events/create"
                 className="w-fit font-semibold transition duration-300 hover:translate-x-1 hover:text-lime"
               >
                 Create an Event
               </Link>
               <Link
-                href="/upcoming-events"
+                href="/events"
                 className="w-fit font-semibold transition duration-300 hover:translate-x-1 hover:text-lime"
               >
                 Find Events

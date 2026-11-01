@@ -50,7 +50,10 @@ export default function Banner() {
           <div className="grid items-center gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:gap-16">
 
             {/* Image collage */}
-            <div className="relative order-2 mx-auto w-full max-w-[540px] lg:order-1 lg:max-w-none">
+            <div
+              className="gt-enter relative order-2 mx-auto w-full max-w-[540px] lg:order-1 lg:max-w-none"
+              style={{ animationDelay: "180ms" }}
+            >
               <div
                 aria-hidden
                 className="absolute -left-4 -top-4 h-24 w-24 rounded-[28px] border-2 border-lime/50 sm:-left-6 sm:-top-6 sm:h-28 sm:w-28"
@@ -134,7 +137,10 @@ export default function Banner() {
 
             {/* Hero copy */}
             <div className="order-1 lg:order-2">
-              <div className="inline-flex items-center gap-2.5 rounded-full border border-lime/30 bg-lime/12 px-4 py-2">
+              <div
+                className="gt-enter inline-flex items-center gap-2.5 rounded-full border border-lime/30 bg-lime/12 px-4 py-2"
+                style={{ animationDelay: "60ms" }}
+              >
                 <span className="grid h-6 w-6 place-items-center rounded-full bg-lime text-forest">
                   <Heart size={13} fill="currentColor" />
                 </span>
@@ -143,7 +149,10 @@ export default function Banner() {
                 </span>
               </div>
 
-              <h1 className="mt-7 text-[clamp(2.7rem,6.4vw,5.4rem)] font-black uppercase leading-[0.9] tracking-[-0.035em] text-white">
+              <h1
+                className="gt-enter mt-7 text-[clamp(2.7rem,6.4vw,5.4rem)] font-black uppercase leading-[0.9] tracking-[-0.035em] text-white"
+                style={{ animationDelay: "150ms" }}
+              >
                 Make room
                 <br />
                 for <span className="text-lime">good.</span>
@@ -167,13 +176,19 @@ export default function Banner() {
                 </span>
               </h1>
 
-              <p className="mt-8 max-w-[30rem] text-base leading-8 text-on-forest/75 sm:text-lg">
+              <p
+                className="gt-enter mt-8 max-w-[30rem] text-base leading-8 text-on-forest/75 sm:text-lg"
+                style={{ animationDelay: "300ms" }}
+              >
                 Great communities don’t happen by accident. Discover local
                 events, lend a hand, and turn small acts of kindness into
                 something bigger.
               </p>
 
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <div
+                className="gt-enter mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap"
+                style={{ animationDelay: "430ms" }}
+              >
                 <Link
                   href="/events"
                   className="group inline-flex min-h-14 items-center justify-center gap-3 rounded-full bg-lime px-7 py-4 text-sm font-black uppercase tracking-[1.2px] text-forest transition duration-300 hover:-translate-y-1 hover:bg-lime-bright hover:shadow-xl hover:shadow-lime/25"

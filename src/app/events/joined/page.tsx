@@ -52,11 +52,11 @@ const JoinedEventsPage = async () => {
   const events: JoinedEvent[] = await response.json();
 
   return (
-    <main className="min-h-screen bg-gray-50 px-5 py-12 dark:bg-gray-950">
+    <main className="min-h-screen bg-background px-5 py-12">
       <div className="mx-auto max-w-7xl">
         {/* Header */}
         <div className="mb-10">
-          <div className="mb-3 flex items-center gap-2 text-emerald-600">
+          <div className="mb-3 flex items-center gap-2 text-forest dark:text-lime">
             <Heart size={22} />
             <span className="font-semibold">My Activities</span>
           </div>
@@ -65,7 +65,7 @@ const JoinedEventsPage = async () => {
             Joined Events
           </h1>
 
-          <p className="mt-2 text-gray-500">
+          <p className="mt-2 text-muted-foreground">
             All the events you have joined in one place.
           </p>
         </div>
@@ -73,19 +73,19 @@ const JoinedEventsPage = async () => {
         {/* Events */}
         {events.length === 0 ? (
           <div className="rounded-2xl border border-dashed p-12 text-center">
-            <Heart className="mx-auto mb-4 text-gray-400" size={45} />
+            <Heart className="mx-auto mb-4 text-muted-foreground/60" size={45} />
 
             <h2 className="text-xl font-bold">
               No Joined Events Yet
             </h2>
 
-            <p className="mt-2 text-gray-500">
-              You haven't joined any events yet.
+            <p className="mt-2 text-muted-foreground">
+              You haven&apos;t joined any events yet.
             </p>
 
             <Link
               href="/events"
-              className="mt-6 inline-block rounded-lg bg-emerald-600 px-6 py-3 font-semibold text-white hover:bg-emerald-700"
+              className="mt-6 inline-block rounded-lg bg-forest px-6 py-3 font-semibold text-lime transition hover:bg-forest-mid dark:bg-lime dark:text-forest-deep dark:hover:bg-lime-bright"
             >
               Explore Events
             </Link>
@@ -95,7 +95,7 @@ const JoinedEventsPage = async () => {
             {events.map((event) => (
               <div
                 key={event._id}
-                className="overflow-hidden rounded-2xl border bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg dark:border-gray-800 dark:bg-gray-900"
+                className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition hover:-translate-y-1 hover:border-lime hover:shadow-lg"
               >
                 {/* Image */}
                 <div className="relative h-52">
@@ -107,7 +107,7 @@ const JoinedEventsPage = async () => {
                     className="object-cover"
                   />
 
-                  <span className="absolute left-4 top-4 rounded-full bg-emerald-500 px-3 py-1 text-xs font-bold text-white">
+                  <span className="absolute left-4 top-4 rounded-full bg-lime px-3 py-1 text-xs font-bold text-forest">
                     {event.eventType}
                   </span>
                 </div>
@@ -118,9 +118,9 @@ const JoinedEventsPage = async () => {
                     {event.title}
                   </h2>
 
-                  <div className="space-y-3 text-sm text-gray-500">
+                  <div className="space-y-3 text-sm text-muted-foreground">
                     <p className="flex items-center gap-2">
-                      <CalendarDays size={17} className="text-emerald-500" />
+                      <CalendarDays size={17} className="text-forest dark:text-lime" />
                       {new Date(event.eventDate).toLocaleDateString(
                         "en-US",
                         {
@@ -132,14 +132,14 @@ const JoinedEventsPage = async () => {
                     </p>
 
                     <p className="flex items-center gap-2">
-                      <MapPin size={17} className="text-emerald-500" />
+                      <MapPin size={17} className="text-forest dark:text-lime" />
                       {event.location}
                     </p>
                   </div>
 
                   <Link
                     href={`/events/${event.eventId}`}
-                    className="mt-6 block rounded-lg bg-emerald-600 px-4 py-3 text-center font-semibold text-white transition hover:bg-emerald-700"
+                    className="mt-6 block rounded-lg bg-forest px-4 py-3 text-center font-semibold text-lime transition hover:bg-forest-mid dark:bg-lime dark:text-forest-deep dark:hover:bg-lime-bright"
                   >
                     View Event
                   </Link>

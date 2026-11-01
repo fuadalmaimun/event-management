@@ -92,7 +92,7 @@ export default function LoginPage() {
           Back to home
         </Link>
 
-        <div className="grid overflow-hidden rounded-[32px] border border-forest/10 bg-card shadow-2xl shadow-forest/10 dark:border-white/10 lg:grid-cols-2">
+        <div className="gt-enter grid overflow-hidden rounded-[32px] border border-forest/10 bg-card shadow-2xl shadow-forest/10 dark:border-white/10 lg:grid-cols-2">
           {/* Left panel */}
           <div className="relative hidden flex-col justify-between overflow-hidden bg-forest p-10 text-on-forest lg:flex xl:p-14">
             <div aria-hidden className="absolute inset-0">
@@ -181,7 +181,7 @@ export default function LoginPage() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
-                      className="h-13 w-full rounded-xl border border-forest/15 bg-background pl-11 pr-4 text-sm text-foreground outline-none transition placeholder:text-muted-foreground/60 focus:border-forest focus:ring-4 focus:ring-forest/10 dark:border-white/10 dark:focus:border-lime dark:focus:ring-lime/10"
+                      className="h-12 w-full rounded-xl border border-forest/15 bg-background pl-11 pr-4 text-sm text-foreground outline-none transition placeholder:text-muted-foreground/60 focus:border-forest focus:ring-4 focus:ring-forest/10 dark:border-white/10 dark:focus:border-lime dark:focus:ring-lime/10"
                     />
                   </div>
                 </div>
@@ -208,7 +208,7 @@ export default function LoginPage() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       required
-                      className="h-13 w-full rounded-xl border border-forest/15 bg-background pl-11 pr-12 text-sm text-foreground outline-none transition placeholder:text-muted-foreground/60 focus:border-forest focus:ring-4 focus:ring-forest/10 dark:border-white/10 dark:focus:border-lime dark:focus:ring-lime/10"
+                      className="h-12 w-full rounded-xl border border-forest/15 bg-background pl-11 pr-12 text-sm text-foreground outline-none transition placeholder:text-muted-foreground/60 focus:border-forest focus:ring-4 focus:ring-forest/10 dark:border-white/10 dark:focus:border-lime dark:focus:ring-lime/10"
                     />
 
                     <button
