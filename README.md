@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+GoodToGether is a social development and volunteer event platform where people can discover events, connect with communities, and participate in meaningful activities to make a positive impact.
 
-## Getting Started
+🔗 Live Website
 
-First, run the development server:
+https://good-to-gether.vercel.app/
 
-```bash
+👉 Key Features
+
+Explore and discover volunteer events.
+
+Create and manage volunteer events.
+
+Join or leave events easily.
+
+View and manage joined events.
+
+Secure authentication with Better Auth.
+
+Protected routes and user-specific features.
+
+Responsive design with light and dark mode.
+
+🛠️ Technologies Used
+
+Frontend:
+
+Next.js
+
+JavaScript
+
+Tailwind CSS
+
+Backend:
+
+Node.js
+
+Express.js
+
+MongoDB
+
+REST API
+
+Authentication:
+
+Better Auth
+
+JWT
+
+JOSE
+
+⚙️ Run Locally
+
+Clone the repository:
+
+git clone YOUR_GITHUB_REPOSITORY_URL
+
+Go to the project directory:
+
+cd your-project-folder
+
+Install dependencies:
+
+npm install
+
+Create a .env.local file and configure the required environment variables.
+
+Start the development server:
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+👨‍💻 Developer
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Fuad Al Maimun
 
-## Learn More
+Portfolio: https://fuad-al-maimun.vercel.app
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
