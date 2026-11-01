@@ -14,6 +14,7 @@ import {
   Users,
 } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
 import {
   Bar,
@@ -152,12 +153,22 @@ export default function DashboardPage() {
       try {
         setError("");
 
+        const token = await getTokenFromClient();
+
+        if (!token) {
+          throw new Error("Unable to verify your session. Please login again.");
+        }
+
+        const authHeaders = { Authorization: `Bearer ${token}` };
+
         const [createdResponse, joinedResponse] = await Promise.all([
-          fetch(`${API}/my-events/${encodeURIComponent(email)}`, {
+          fetch(`${API}/my-events`, {
             cache: "no-store",
+            headers: authHeaders,
           }),
-          fetch(`${API}/joined-events/${encodeURIComponent(email)}`, {
+          fetch(`${API}/joined-events`, {
             cache: "no-store",
+            headers: authHeaders,
           }),
         ]);
 

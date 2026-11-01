@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 import { Pencil, Trash2, Eye, MapPin, CalendarDays, Plus } from "lucide-react";
 import EditEvent from "./EditEvent";
 import DeleteEvent from "./DeleteEvent";
@@ -45,10 +46,18 @@ export default function ManageEventsPage() {
       try {
         setLoading(true);
 
-        const res = await fetch(
-          `${API}/my-events/${encodeURIComponent(email)}`,
-          { cache: "no-store" },
-        );
+        const token = await getTokenFromClient();
+
+        if (!token) {
+          throw new Error("Unable to verify your session. Please login again.");
+        }
+
+        const res = await fetch(`${API}/my-events`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          cache: "no-store",
+        });
 
         if (!res.ok) {
           throw new Error("Failed to load events");
@@ -128,7 +137,7 @@ export default function ManageEventsPage() {
         </p>
 
         <Link
-          href="/sign-in"
+          href="/login"
           className="mt-3 inline-block text-primary underline"
         >
           Sign in

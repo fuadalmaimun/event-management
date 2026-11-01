@@ -5,6 +5,7 @@ import type { FormEvent } from "react";
 import { Loader2, Pencil, Save, X } from "lucide-react";
 import type { Event } from "./page";
 import { toast } from "sonner";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
 interface EditEventProps {
   event: Event;
@@ -29,7 +30,8 @@ export default function EditEvent({
   });
 
   const [updating, setUpdating] = useState(false);
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  const API_URL =
+    process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
   const handleUpdate = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -37,10 +39,17 @@ export default function EditEvent({
     try {
       setUpdating(true);
 
+      const token = await getTokenFromClient();
+
+      if (!token) {
+        throw new Error("Unable to verify your session. Please login again.");
+      }
+
       const response = await fetch(`${API_URL}/events/${event._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           ...formData,

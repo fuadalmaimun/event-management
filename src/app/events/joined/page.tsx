@@ -1,4 +1,5 @@
 import { auth } from "@/lib/auth";
+import { getTokenFromServer } from "@/lib/getTokenFromServer";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import Image from "next/image";
@@ -24,20 +25,25 @@ const JoinedEventsPage = async () => {
     headers: await headers(),
   });
 
-  // Login না থাকলে sign-in page
+  // Login না থাকলে login page
   if (!session) {
-    redirect("/sign-in");
+    redirect("/login");
   }
 
-  const email = session.user.email;
+  // Better Auth JWT (required by the backend's verifyToken middleware)
+  const token = await getTokenFromServer();
+
+  if (!token) {
+    redirect("/login");
+  }
 
   // Fetch joined events
-  const response = await fetch(
-    `${API}/joined-events/${encodeURIComponent(email)}`,
-    {
-      cache: "no-store",
-    }
-  );
+  const response = await fetch(`${API}/joined-events`, {
+    cache: "no-store",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   if (!response.ok) {
     throw new Error("Failed to fetch joined events");

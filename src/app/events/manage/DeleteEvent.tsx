@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Loader2, Trash2, X } from "lucide-react";
 import type { Event } from "./page";
 import { toast } from "sonner";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
 interface DeleteEventProps {
   event: Event;
@@ -19,16 +20,24 @@ export default function DeleteEvent({
   onDeleted,
 }: DeleteEventProps) {
   const [deleting, setDeleting] = useState(false);
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  const API_URL =
+    process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
   const handleDelete = async () => {
     try {
       setDeleting(true);
 
+      const token = await getTokenFromClient();
+
+      if (!token) {
+        throw new Error("Unable to verify your session. Please login again.");
+      }
+
       const response = await fetch(`${API_URL}/events/${event._id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           organizerEmail,

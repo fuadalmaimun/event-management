@@ -4,6 +4,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 import { toast } from "sonner";
 import { Heart } from "lucide-react";
 
@@ -37,9 +38,20 @@ const JoinButton = ({ event }: { event: Event }) => {
 
     const checkJoined = async () => {
       try {
+        const token = await getTokenFromClient();
+
+        // Not logged in (or token unavailable) → treat as not joined
+        if (!token) {
+          setIsJoined(false);
+          return;
+        }
+
         const res = await fetch(
           `${API}/joined-events/${encodeURIComponent(email)}/${event._id}`,
-          { cache: "no-store" }
+          {
+            cache: "no-store",
+            headers: { Authorization: `Bearer ${token}` },
+          }
         );
 
         if (!res.ok) throw new Error("Failed to check joined status");
@@ -72,12 +84,21 @@ const JoinButton = ({ event }: { event: Event }) => {
     setLoading(true);
 
     try {
+      const token = await getTokenFromClient();
+
+      if (!token) {
+        throw new Error("Unable to verify your session. Please login again.");
+      }
+
+      const authHeaders = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+
       if (isJoined) {
         const res = await fetch(`${API}/leave-event`, {
           method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: authHeaders,
           body: JSON.stringify({
             eventId: event._id,
             email,
@@ -91,9 +112,7 @@ const JoinButton = ({ event }: { event: Event }) => {
       } else {
         const res = await fetch(`${API}/join-event`, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: authHeaders,
           body: JSON.stringify({
             eventId: event._id,
             email,
