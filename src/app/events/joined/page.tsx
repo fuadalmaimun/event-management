@@ -20,17 +20,14 @@ interface JoinedEvent {
 const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 const JoinedEventsPage = async () => {
-  // Logged-in user session
   const session = await auth.api.getSession({
     headers: await headers(),
   });
 
-  // Login না থাকলে login page
   if (!session) {
     redirect("/login");
   }
 
-  // Better Auth JWT (required by the backend's verifyToken middleware)
   const token = await getTokenFromServer();
 
   if (!token) {

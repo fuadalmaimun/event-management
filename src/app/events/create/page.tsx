@@ -73,55 +73,41 @@ export default function CreateEventPage() {
       return;
     }
 
-    try {
-      setLoading(true);
+    setLoading(true);
 
-      // 1. Get JWT Token
-      const { data, error } = await authClient.token();
+    const eventData = {
+      ...formData,
+      organizerEmail: session.user.email,
+      createdAt: new Date().toISOString(),
+    };
+    // 1. Get JWT Token
+    const { data: tokenData } = await authClient.token();
+    const token = tokenData?.token;
 
-      if (error || !data?.token) {
-        throw new Error("Unable to get access token. Please login again.");
-      }
-
-      const token = data.token;
-
-      // Backend JWT থেকে organizerEmail নেবে
-      const eventData = {
-        ...formData,
-        createdAt: new Date().toISOString(),
-      };
-
-      // 4. Send Request
-      const response = await fetch(`${ process.env.NEXT_PUBLIC_API_URL}/add-event`, {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/add-event`,
+      {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(eventData),
-      });
+      },
+    );
 
-      const result = await response.json();
+    const result = await response.json();
 
-      if (!response.ok) {
-        throw new Error(result.message || "Failed to create event.");
-      }
-
-      toast.success("Event created successfully!");
-
-      router.push("/events");
-      router.refresh();
-    } catch (error) {
-      console.error("Create event error:", error);
-
-      toast.error(
-        error instanceof Error
-          ? error.message
-          : "Something went wrong. Please try again.",
-      );
-    } finally {
+    if (!response.ok) {
       setLoading(false);
+      toast.error(result.message || "Failed to create event.");
+      return;
     }
+
+    toast.success("Event created successfully!");
+    setLoading(false);
+    router.push("/events");
+    router.refresh();
   };
 
   if (isPending) {
