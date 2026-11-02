@@ -63,7 +63,7 @@ const steps = [
 
 const gallery = [
   {
-    src: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=900&q=85",
+    src: "https://media.assettype.com/bdnews24-english/2023-11/1aa46215-0110-4915-b6ba-bf1a0a7f0516/international_coastal_cleanup_coxsbazar_171123_002.jpg",
     title: "Together for a better world",
     category: "Community",
   },
