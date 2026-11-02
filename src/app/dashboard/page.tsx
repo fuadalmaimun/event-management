@@ -2,47 +2,25 @@
 
 import { useEffect, useMemo, useState, type ElementType } from "react";
 import Link from "next/link";
-import {
-  Activity,
-  ArrowUpRight,
-  CalendarCheck,
-  CalendarDays,
-  CalendarPlus,
-  Clock3,
-  MapPin,
-  TrendingUp,
-  Users,
-} from "lucide-react";
+import {  Activity,  ArrowUpRight,  CalendarCheck,  CalendarDays,
+  CalendarPlus, Clock3,  MapPin,  TrendingUp, Users,} 
+  from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  Cell,
-  Pie,
-  PieChart,
+import {  Bar, BarChart,  CartesianGrid, Cell,  Pie,  PieChart,
   XAxis,
   YAxis,
 } from "recharts";
 
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
+import {  ChartContainer,  ChartTooltip,  ChartTooltipContent,
   ChartLegend,
   ChartLegendContent,
   type ChartConfig,
 } from "@/components/ui/chart";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import {  Card,  CardContent,  CardDescription,  CardHeader,
+  CardTitle,} from "@/components/ui/card";
 
 interface Event {
   _id: string;
