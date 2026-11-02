@@ -1,16 +1,9 @@
-
 "use client";
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  CalendarDays,
-  MapPin,
-  ArrowUpRight,
-  Sparkles,
-  Heart,
-} from "lucide-react";
+import { CalendarDays, MapPin, ArrowUpRight, Sparkles } from "lucide-react";
 
 import {
   Carousel,
@@ -24,6 +17,7 @@ const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 interface Event {
   _id: string;
+  allEventId?: string;
   title: string;
   description: string;
   image: string;
@@ -34,13 +28,16 @@ interface Event {
 
 const FeatureCard = () => {
   const [events, setEvents] = useState<Event[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchEvents = async () => {
       try {
         const res = await fetch(`${API}/events`);
 
-        if (!res.ok) throw new Error("Failed to fetch events");
+        if (!res.ok) {
+          throw new Error("Failed to fetch events");
+        }
 
         const data: Event[] = await res.json();
 
@@ -48,14 +45,15 @@ const FeatureCard = () => {
           .filter((event) => new Date(event.eventDate) >= new Date())
           .sort(
             (a, b) =>
-              new Date(a.eventDate).getTime() -
-              new Date(b.eventDate).getTime()
+              new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime(),
           )
           .slice(0, 6);
 
         setEvents(upcomingEvents);
       } catch (error) {
         console.error("Error fetching events:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -79,14 +77,12 @@ const FeatureCard = () => {
 
             <h2 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl md:text-5xl">
               Explore Featured{" "}
-              <span className="text-forest dark:text-lime">
-                Events
-              </span>
+              <span className="text-forest dark:text-lime">Events</span>
             </h2>
 
             <p className="mt-4 max-w-xl text-sm leading-7 text-muted-foreground sm:text-base">
-              Discover meaningful events, connect with your community,
-              and become part of something bigger.
+              Discover meaningful events, connect with your community, and
+              become part of something bigger.
             </p>
           </div>
 
@@ -102,10 +98,22 @@ const FeatureCard = () => {
           </Link>
         </div>
 
-        {/* Events Carousel */}
-        {events.length === 0 ? (
+        {/* Loading State */}
+        {loading ? (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {Array.from({ length: 3 }).map((_, index) => (
+              <div
+                key={index}
+                className="h-[360px] animate-pulse rounded-3xl bg-muted"
+              />
+            ))}
+          </div>
+        ) : events.length === 0 ? (
           <div className="rounded-2xl border border-dashed border-border py-16 text-center">
-            <CalendarDays className="mx-auto mb-4 text-forest dark:text-lime" size={36} />
+            <CalendarDays
+              className="mx-auto mb-4 text-forest dark:text-lime"
+              size={36}
+            />
             <h3 className="text-lg font-bold text-foreground">
               No Upcoming Events
             </h3>
@@ -121,90 +129,84 @@ const FeatureCard = () => {
             }}
             className="mx-auto w-full"
           >
-            <CarouselContent className="-ml-5 py-3">
+            <CarouselContent className="-ml-4 py-3">
               {events.map((event) => (
                 <CarouselItem
                   key={event._id}
-                  className="basis-full pl-5 sm:basis-1/2 lg:basis-1/3"
+                  className="basis-full pl-4 sm:basis-1/2 lg:basis-1/3"
                 >
-                  <div className="group h-full overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-lime hover:shadow-xl hover:shadow-forest/10">
-                    {/* Image */}
-                    <div className="relative h-56 overflow-hidden">
+                  <Link
+                    href={`/events/${event.allEventId || event._id}`}
+                    className="group block h-full"
+                  >
+                    <div className="relative h-[360px] overflow-hidden rounded-3xl border border-border bg-card shadow-md transition-all duration-500 hover:-translate-y-2 hover:border-lime hover:shadow-xl hover:shadow-forest/10">
+                      {/* Image */}
                       <Image
                         src={event.image}
                         alt={event.title}
                         fill
                         unoptimized
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         className="object-cover transition-transform duration-700 group-hover:scale-110"
                       />
 
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                      {/* Gradient Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
 
-                      <span className="absolute left-4 top-4 rounded-full border border-white/20 bg-black/40 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur-md">
+                      {/* Event Type */}
+                      <span className="absolute left-5 top-5 rounded-full border border-white/20 bg-white/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-white backdrop-blur-md">
                         {event.eventType}
                       </span>
 
-                      <div className="absolute bottom-4 left-4 right-4">
-                        <p className="flex items-center gap-2 text-sm font-medium text-white/90">
-                          <MapPin size={15} />
-                          {event.location}
+                      {/* Content */}
+                      <div className="absolute inset-x-0 bottom-0 p-6 text-white">
+                        <div className="mb-3 flex items-center gap-2 text-sm text-white/80">
+                          <MapPin className="size-4 shrink-0 text-lime" />
+                          <span className="line-clamp-1">{event.location}</span>
+                        </div>
+
+                        <h3 className="line-clamp-2 text-2xl font-bold transition-colors group-hover:text-lime">
+                          {event.title}
+                        </h3>
+
+                        <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-white/70">
+                          {event.description}
                         </p>
-                      </div>
 
-                      <div className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-card/90 text-forest shadow-md transition hover:scale-110 dark:text-lime">
-                        <Heart size={17} />
-                      </div>
-                    </div>
+                        <div className="mt-5 flex items-center justify-between border-t border-white/20 pt-4">
+                          <span className="flex items-center gap-2 text-sm text-white/80">
+                            <CalendarDays className="size-4 shrink-0 text-lime" />
+                            {new Date(event.eventDate).toLocaleDateString(
+                              "en-US",
+                              {
+                                month: "short",
+                                day: "numeric",
+                                year: "numeric",
+                              },
+                            )}
+                          </span>
 
-                    {/* Content */}
-                    <div className="flex min-h-[235px] flex-col p-5">
-                      <div className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-forest dark:text-lime">
-                        <CalendarDays size={15} />
-                        {new Date(event.eventDate).toLocaleDateString(
-                          "en-US",
-                          {
-                            day: "numeric",
-                            month: "short",
-                            year: "numeric",
-                          }
-                        )}
-                      </div>
-
-                      <h3 className="line-clamp-1 text-xl font-bold text-card-foreground transition-colors group-hover:text-forest dark:group-hover:text-lime">
-                        {event.title}
-                      </h3>
-
-                      <p className="mt-3 line-clamp-2 text-sm leading-6 text-muted-foreground">
-                        {event.description}
-                      </p>
-
-                      <div className="mt-auto pt-6">
-                        <Link
-                          href={`/events/${event._id}`}
-                          className="group/button flex w-full items-center justify-center gap-2 rounded-xl bg-lime-mist px-4 py-3 text-sm font-bold text-forest transition hover:bg-forest hover:text-lime dark:bg-lime/15 dark:text-lime dark:hover:bg-lime dark:hover:text-forest-deep"
-                        >
-                          View Event Details
-                          <ArrowUpRight
-                            size={17}
-                            className="transition-transform group-hover/button:translate-x-1 group-hover/button:-translate-y-1"
-                          />
-                        </Link>
+                          <span className="flex items-center gap-2 text-sm font-semibold text-lime">
+                            Explore
+                            <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 </CarouselItem>
               ))}
             </CarouselContent>
 
             {/* Carousel Controls */}
-            <div className="mt-8 flex items-center justify-center gap-3">
-              <CarouselPrevious className="static size-11 translate-y-0 rounded-full border-border bg-card text-foreground shadow-sm transition hover:bg-forest hover:text-lime dark:hover:bg-lime dark:hover:text-forest-deep" />
+            <div className="mt-8 flex items-center justify-center gap-4">
+              <CarouselPrevious className="static size-12 translate-y-0 rounded-full border border-border bg-card text-foreground shadow-sm transition-all hover:border-forest hover:bg-forest hover:text-lime dark:hover:border-lime dark:hover:bg-lime dark:hover:text-forest-deep" />
 
-              <span className="text-xs font-semibold tracking-widest text-muted-foreground">
+              <span className="text-xs font-bold tracking-[0.25em] text-muted-foreground">
                 DISCOVER MORE
               </span>
 
-              <CarouselNext className="static size-11 translate-y-0 rounded-full border-border bg-card text-foreground shadow-sm transition hover:bg-forest hover:text-lime dark:hover:bg-lime dark:hover:text-forest-deep" />
+              <CarouselNext className="static size-12 translate-y-0 rounded-full border border-border bg-card text-foreground shadow-sm transition-all hover:border-forest hover:bg-forest hover:text-lime dark:hover:border-lime dark:hover:bg-lime dark:hover:text-forest-deep" />
             </div>
           </Carousel>
         )}

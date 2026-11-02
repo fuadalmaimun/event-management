@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -34,8 +33,7 @@ interface Props {
   params: Promise<{ id: string }>;
 }
 
-const API =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 const DetailsPage = async ({ params }: Props) => {
   const { id } = await params;
@@ -66,11 +64,9 @@ const DetailsPage = async ({ params }: Props) => {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-
       {/* Hero Section */}
       <section className="relative">
         <div className="relative h-[420px] overflow-hidden sm:h-[480px] lg:h-[560px]">
-
           <Image
             src={event.image}
             alt={event.title}
@@ -84,7 +80,6 @@ const DetailsPage = async ({ params }: Props) => {
 
           <div className="absolute inset-0">
             <div className="mx-auto flex h-full max-w-7xl flex-col justify-between px-5 py-7 sm:px-8 lg:px-10">
-
               <Link
                 href="/events"
                 className="flex w-fit items-center gap-2 rounded-full border border-white/30 bg-black/30 px-5 py-2.5 text-sm font-semibold text-white backdrop-blur-md transition hover:bg-white hover:text-black"
@@ -94,7 +89,6 @@ const DetailsPage = async ({ params }: Props) => {
               </Link>
 
               <div className="max-w-3xl pb-4 text-white">
-
                 <span className="mb-5 inline-flex items-center gap-2 rounded-full bg-lime px-4 py-2 text-xs font-bold uppercase tracking-wider text-forest shadow-lg">
                   <Heart size={14} />
                   {event.eventType}
@@ -105,7 +99,6 @@ const DetailsPage = async ({ params }: Props) => {
                 </h1>
 
                 <div className="mt-6 flex flex-col gap-3 text-sm text-white/90 sm:flex-row sm:flex-wrap sm:gap-6">
-
                   <span className="flex items-center gap-2">
                     <MapPin size={18} className="shrink-0 text-lime" />
                     {event.location}
@@ -115,10 +108,8 @@ const DetailsPage = async ({ params }: Props) => {
                     <CalendarDays size={18} className="shrink-0 text-lime" />
                     {formattedDate}
                   </span>
-
                 </div>
               </div>
-
             </div>
           </div>
         </div>
@@ -126,10 +117,8 @@ const DetailsPage = async ({ params }: Props) => {
 
       {/* Main Content */}
       <section className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-5 py-10 sm:px-8 sm:py-14 lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-10 lg:px-10">
-
         {/* Left Content */}
         <div className="min-w-0">
-
           {/* Section Heading */}
           <div className="mb-7">
             <p className="text-sm font-bold uppercase tracking-[3px] text-forest dark:text-lime">
@@ -141,23 +130,19 @@ const DetailsPage = async ({ params }: Props) => {
             </h2>
 
             <p className="mt-3 max-w-2xl text-sm leading-7 text-muted-foreground">
-              Every small action can create a meaningful impact.
-              Discover this community initiative and become part
-              of something positive.
+              Every small action can create a meaningful impact. Discover this
+              community initiative and become part of something positive.
             </p>
           </div>
 
           {/* Description Card */}
           <div className="rounded-3xl border border-border bg-card p-5 shadow-sm sm:p-8">
-
             <div className="flex items-center gap-3">
               <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-lime-mist text-forest dark:bg-lime/15 dark:text-lime">
                 <HandHeart size={23} />
               </div>
 
-              <h3 className="text-xl font-bold">
-                Event Description
-              </h3>
+              <h3 className="text-xl font-bold">Event Description</h3>
             </div>
 
             <p className="mt-5 whitespace-pre-line text-sm leading-8 text-muted-foreground sm:text-base">
@@ -166,12 +151,9 @@ const DetailsPage = async ({ params }: Props) => {
 
             <div className="my-8 border-t border-border" />
 
-            <h3 className="text-xl font-bold">
-              Why Participate?
-            </h3>
+            <h3 className="text-xl font-bold">Why Participate?</h3>
 
             <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
-
               <div className="flex gap-4">
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-lime-mist text-forest dark:bg-lime/15">
                   <HandHeart size={23} />
@@ -180,7 +162,7 @@ const DetailsPage = async ({ params }: Props) => {
                 <div>
                   <h4 className="font-bold">Help Your Community</h4>
                   <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                    Make a positive difference in people's lives.
+                    Make a positive difference in people&apos;s lives.{" "}
                   </p>
                 </div>
               </div>
@@ -223,30 +205,23 @@ const DetailsPage = async ({ params }: Props) => {
                   </p>
                 </div>
               </div>
-
             </div>
           </div>
 
           {/* Organizer Card */}
           <div className="mt-7 rounded-3xl border border-border bg-card p-5 shadow-sm sm:p-7">
-
             <div className="flex items-center gap-2">
               <ShieldCheck size={21} className="text-forest dark:text-lime" />
-              <h3 className="text-xl font-bold">
-                Event Organizer
-              </h3>
+              <h3 className="text-xl font-bold">Event Organizer</h3>
             </div>
 
             <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-center">
-
               <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-lime-mist text-forest dark:bg-lime/15 dark:text-lime">
                 <Users size={25} />
               </div>
 
               <div className="min-w-0">
-                <h4 className="font-bold">
-                  Community Organizer
-                </h4>
+                <h4 className="font-bold">Community Organizer</h4>
 
                 <p className="mt-1 break-all text-sm text-muted-foreground">
                   {event.organizerEmail || event.email || "Not provided"}
@@ -257,17 +232,13 @@ const DetailsPage = async ({ params }: Props) => {
                 <ShieldCheck size={15} />
                 Organizer
               </div>
-
             </div>
           </div>
-
         </div>
 
         {/* Right Sidebar */}
         <aside className="min-w-0">
-
           <div className="rounded-3xl border border-border bg-card p-5 shadow-xl shadow-forest/10 dark:shadow-black/30 sm:p-7 lg:sticky lg:top-24">
-
             <div className="flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-forest dark:text-lime">
               <Sparkles size={17} />
               Join the movement
@@ -278,26 +249,21 @@ const DetailsPage = async ({ params }: Props) => {
             </h3>
 
             <p className="mt-3 text-sm leading-7 text-muted-foreground">
-              Be part of this community initiative and help
-              create a positive impact.
+              Be part of this community initiative and help create a positive
+              impact.
             </p>
 
             {/* Event Information */}
             <div className="my-7 space-y-5">
-
               <div className="flex items-center gap-4">
                 <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-lime-mist text-forest dark:bg-lime/15">
                   <CalendarDays size={21} />
                 </div>
 
                 <div className="min-w-0">
-                  <p className="text-xs text-muted-foreground">
-                    Event Date
-                  </p>
+                  <p className="text-xs text-muted-foreground">Event Date</p>
 
-                  <p className="mt-1 text-sm font-bold">
-                    {formattedDate}
-                  </p>
+                  <p className="mt-1 text-sm font-bold">{formattedDate}</p>
                 </div>
               </div>
 
@@ -307,13 +273,9 @@ const DetailsPage = async ({ params }: Props) => {
                 </div>
 
                 <div>
-                  <p className="text-xs text-muted-foreground">
-                    Event Time
-                  </p>
+                  <p className="text-xs text-muted-foreground">Event Time</p>
 
-                  <p className="mt-1 text-sm font-bold">
-                    {formattedTime}
-                  </p>
+                  <p className="mt-1 text-sm font-bold">{formattedTime}</p>
                 </div>
               </div>
 
@@ -323,21 +285,17 @@ const DetailsPage = async ({ params }: Props) => {
                 </div>
 
                 <div className="min-w-0">
-                  <p className="text-xs text-muted-foreground">
-                    Location
-                  </p>
+                  <p className="text-xs text-muted-foreground">Location</p>
 
                   <p className="mt-1 break-words text-sm font-bold">
                     {event.location}
                   </p>
                 </div>
               </div>
-
             </div>
 
             {/* Info Box */}
             <div className="rounded-2xl bg-lime-mist p-4 dark:bg-lime/10">
-
               <div className="flex items-center gap-2 text-forest dark:text-lime">
                 <CheckCircle2 size={18} />
 
@@ -349,7 +307,6 @@ const DetailsPage = async ({ params }: Props) => {
               <p className="mt-2 text-xs leading-5 text-forest/75 dark:text-lime/75">
                 Join this event and become part of something bigger.
               </p>
-
             </div>
 
             {/* Join Button */}
@@ -360,11 +317,8 @@ const DetailsPage = async ({ params }: Props) => {
             <p className="mt-4 text-center text-xs text-muted-foreground/70">
               Login required to join this event.
             </p>
-
           </div>
-
         </aside>
-
       </section>
     </main>
   );
